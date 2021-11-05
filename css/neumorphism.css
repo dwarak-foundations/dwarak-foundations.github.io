@@ -9260,6 +9260,7 @@ a.close.disabled {
     text-indent: -999px;
     cursor: pointer;
     background-color: #ECF0F3;
+    color: white;
     background-clip: padding-box;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
@@ -29720,10 +29721,6 @@ textarea[resize="horizontal"] {
 .map {
     height: 500px;
     width: 100%;
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    filter: grayscale(100%);
 }
 
 /**
