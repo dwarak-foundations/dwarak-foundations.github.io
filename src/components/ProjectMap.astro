@@ -83,6 +83,7 @@ const serializedProjects = JSON.stringify(mapProjects).replaceAll("<", "\\u003c"
       maxZoom: 18,
       scrollWheelZoom: false,
     });
+    map.attributionControl.setPrefix(false);
 
     L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",

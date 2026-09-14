@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ContactBand from "@/components/ContactBand.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
+import ProjectsExplorer from "@/components/ProjectsExplorer.astro";
 import { byOrder } from "@/lib/content";
 
 const projects = (await getCollection("projects")).sort(byOrder);
@@ -10,7 +10,7 @@ const projects = (await getCollection("projects")).sort(byOrder);
 
 <BaseLayout
   title="Projects"
-  description="Explore completed residential buildings, apartments, villas, and individual homes by Dwarak Foundations across Chennai."
+  description="Explore completed and ongoing residential buildings, individual homes, and future opportunities by Dwarak Foundations across Chennai."
 >
   <header class="page-hero">
     <div class="page-hero__grid shell">
@@ -20,17 +20,13 @@ const projects = (await getCollection("projects")).sort(byOrder);
       </div>
       <div class="page-hero__aside">
         <p>
-          A selection of apartment communities, villas, and individual residences delivered across Chennai since 1998.
+          Explore completed homes, current work, and future opportunities across Chennai by map or list.
         </p>
       </div>
     </div>
   </header>
 
-  <section class="section">
-    <div class="shell project-grid">
-      {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
-    </div>
-  </section>
+  <ProjectsExplorer projects={projects} />
 
   <ContactBand />
 </BaseLayout>

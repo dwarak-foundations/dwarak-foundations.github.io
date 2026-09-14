@@ -1,0 +1,577 @@
+---
+import type { CollectionEntry } from "astro:content";
+import "leaflet/dist/leaflet.css";
+import { projectPath, projectStatus } from "@/lib/content";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+interface ExplorerPin {
+  id: string;
+  kind: "house" | "plot";
+  status: "completed" | "ongoing" | "upcoming";
+  statusLabel: string;
+  title: string;
+  previewTitle: string;
+  location: string;
+  summary: string;
+  image?: string;
+  url?: string;
+  whatsapp: string;
+  latitude: number;
+  longitude: number;
+}
+
+const whatsappNumber = "919884409031";
+const whatsappHref = (message: string) =>
+  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+const { projects } = Astro.props;
+const projectPins: ExplorerPin[] = projects.map((project) => ({
+  id: project.id,
+  kind: "house",
+  status: project.data.status,
+  statusLabel: projectStatus(project.data.status),
+  title: project.data.title,
+  previewTitle: project.data.title,
+  location: project.data.location,
+  summary: project.data.summary,
+  image: project.data.hero.src,
+  url: projectPath(project),
+  whatsapp: whatsappHref(`Hello, I am asking about ${project.data.title} in ${project.data.location}.`),
+  latitude: project.data.coordinates.latitude,
+  longitude: project.data.coordinates.longitude,
+}));
+const futurePins: ExplorerPin[] = [
+  {
+    id: "future-pallikaranai",
+    kind: "plot",
+    status: "upcoming",
+    statusLabel: "Upcoming",
+    title: "Looking in Pallikaranai",
+    previewTitle: "We are looking for land here. Is this yours?",
+    location: "Pallikaranai, Chennai",
+    summary: "A small luxury apartment building, if the ground is right.",
+    whatsapp: whatsappHref("Hello, I have a plot in Pallikaranai."),
+    latitude: 12.9338,
+    longitude: 80.2185,
+  },
+  {
+    id: "future-perumbakkam",
+    kind: "plot",
+    status: "upcoming",
+    statusLabel: "Upcoming",
+    title: "Looking in Perumbakkam",
+    previewTitle: "We are looking for land here. Is this yours?",
+    location: "Perumbakkam, Chennai",
+    summary: "Two to four grounds. A joint venture shaped with the same care as our Rajam Nagar homes.",
+    whatsapp: whatsappHref("Hello, I have a plot in Perumbakkam."),
+    latitude: 12.903,
+    longitude: 80.1995,
+  },
+];
+const pins = [...projectPins, ...futurePins];
+const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
+---
+
+<section class="section projects-explorer-section" aria-labelledby="projects-explorer-title">
+  <div class="shell">
+    <div class="projects-explorer-heading" data-reveal>
+      <div>
+        <p class="eyebrow">Explore by place</p>
+        <h2 id="projects-explorer-title">Every building has an address and a story.</h2>
+      </div>
+      <p>Choose a house or plot for a quick preview, then open the project or start a WhatsApp conversation.</p>
+    </div>
+
+    <div class="projects-explorer" data-projects-explorer data-reveal>
+      <div class="projects-explorer-toolbar">
+        <div class="projects-explorer-toolbar__group" role="group" aria-label="Filter projects by status">
+          <button type="button" data-explorer-filter="completed" aria-pressed="true">Completed</button>
+          <button type="button" data-explorer-filter="ongoing" aria-pressed="true">Ongoing</button>
+          <button type="button" data-explorer-filter="upcoming" aria-pressed="false">Upcoming</button>
+        </div>
+        <div class="projects-explorer-toolbar__group" role="group" aria-label="Choose project view">
+          <button type="button" data-explorer-view="map" aria-pressed="true">Map</button>
+          <button type="button" data-explorer-view="list" aria-pressed="false">List</button>
+        </div>
+        <button class="projects-explorer-locate" type="button" data-explorer-locate>
+          <span aria-hidden="true">⌖</span> Near me
+        </button>
+        <p class="projects-explorer-count" data-explorer-count aria-live="polite"></p>
+      </div>
+
+      <p class="projects-explorer-note" data-explorer-note aria-live="polite" hidden></p>
+
+      <div class="projects-explorer-stage">
+        <div
+          class="projects-explorer-map"
+          data-explorer-map
+          role="region"
+          aria-label="Map of completed, ongoing, and upcoming Dwarak Foundations locations"
+        ></div>
+
+        <div class="projects-explorer-list" data-explorer-list hidden>
+          {pins.map((pin) => (
+            <button
+              type="button"
+              class:list={["projects-explorer-card", `projects-explorer-card--${pin.kind}`]}
+              data-explorer-pin={pin.id}
+              aria-label={`Preview ${pin.title}`}
+            >
+              {pin.image ? (
+                <img src={pin.image} alt="" width="800" height="600" loading="lazy" decoding="async" />
+              ) : (
+                <span class="projects-explorer-card__plot" aria-hidden="true"></span>
+              )}
+              <span class="projects-explorer-card__shade"></span>
+              <span class="projects-explorer-card__copy">
+                <small>{pin.statusLabel}</small>
+                <strong>{pin.title}</strong>
+                <span>{pin.location}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div
+          class="projects-explorer-preview"
+          data-explorer-preview
+          role="dialog"
+          aria-labelledby="projects-explorer-preview-title"
+          tabindex="-1"
+          hidden
+        >
+          <button class="projects-explorer-preview__close" type="button" data-explorer-close aria-label="Close project preview">×</button>
+          <div class="projects-explorer-preview__image" data-explorer-preview-image-wrap>
+            <img data-explorer-preview-image src="" alt="" width="800" height="500" />
+          </div>
+          <div class="projects-explorer-preview__plot" data-explorer-preview-plot hidden aria-hidden="true"></div>
+          <div class="projects-explorer-preview__body">
+            <p class="eyebrow" data-explorer-preview-status></p>
+            <h3 id="projects-explorer-preview-title" data-explorer-preview-title></h3>
+            <p class="projects-explorer-preview__location" data-explorer-preview-location></p>
+            <p data-explorer-preview-summary></p>
+            <div class="projects-explorer-preview__actions">
+              <a class="button button--outline" data-explorer-preview-whatsapp target="_blank" rel="noreferrer">
+                WhatsApp <span aria-hidden="true">↗</span>
+              </a>
+              <a class="button" data-explorer-preview-project data-analytics-event="project_opened">
+                Open this building <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <small class="projects-explorer-preview__reach">Your message reaches the Dwarak Foundations team directly.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script is:inline id="projects-explorer-data" type="application/json" set:html={serializedPins}></script>
+</section>
+
+<script>
+  import * as L from "leaflet";
+
+  interface ExplorerPin {
+    id: string;
+    kind: "house" | "plot";
+    status: "completed" | "ongoing" | "upcoming";
+    statusLabel: string;
+    title: string;
+    previewTitle: string;
+    location: string;
+    summary: string;
+    image?: string;
+    url?: string;
+    whatsapp: string;
+    latitude: number;
+    longitude: number;
+  }
+
+  const explorer = document.querySelector<HTMLElement>("[data-projects-explorer]");
+  const dataElement = document.querySelector<HTMLScriptElement>("#projects-explorer-data");
+
+  if (explorer && dataElement) {
+    const explorerRoot = explorer;
+    const pins = JSON.parse(dataElement.textContent ?? "[]") as ExplorerPin[];
+    const housePins = pins.filter((pin) => pin.kind === "house");
+    const pinById = new Map(pins.map((pin) => [pin.id, pin]));
+    const defaultStatuses: ExplorerPin["status"][] = ["completed", "ongoing"];
+    const allowedStatuses: ExplorerPin["status"][] = ["completed", "ongoing", "upcoming"];
+    const query = new URLSearchParams(window.location.search);
+    const requestedStatuses = (query.get("layers") ?? "")
+      .split(",")
+      .filter((status): status is ExplorerPin["status"] =>
+        allowedStatuses.includes(status as ExplorerPin["status"]),
+      );
+    const activeStatuses = new Set(requestedStatuses.length ? requestedStatuses : defaultStatuses);
+    let activeView: "map" | "list" = query.get("view") === "list" ? "list" : "map";
+    let selectedPin: ExplorerPin | undefined;
+    let lastTrigger: HTMLElement | null = null;
+
+    const mapElement = explorerRoot.querySelector<HTMLElement>("[data-explorer-map]");
+    const listElement = explorerRoot.querySelector<HTMLElement>("[data-explorer-list]");
+    const preview = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview]");
+    const closeButton = explorerRoot.querySelector<HTMLButtonElement>("[data-explorer-close]");
+    const count = explorerRoot.querySelector<HTMLElement>("[data-explorer-count]");
+    const note = explorerRoot.querySelector<HTMLElement>("[data-explorer-note]");
+    const previewImageWrap = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-image-wrap]");
+    const previewImage = explorerRoot.querySelector<HTMLImageElement>("[data-explorer-preview-image]");
+    const previewPlot = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-plot]");
+    const previewStatus = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-status]");
+    const previewTitle = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-title]");
+    const previewLocation = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-location]");
+    const previewSummary = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-summary]");
+    const whatsappLink = explorerRoot.querySelector<HTMLAnchorElement>("[data-explorer-preview-whatsapp]");
+    const projectLink = explorerRoot.querySelector<HTMLAnchorElement>("[data-explorer-preview-project]");
+
+    if (!mapElement || !listElement || !preview) throw new Error("Project explorer markup is incomplete");
+    const mapRoot = mapElement;
+    const listRoot = listElement;
+    const previewPanel = preview;
+
+    const map = L.map(mapRoot, {
+      center: [12.93752, 80.209528],
+      zoom: 12,
+      minZoom: 10,
+      maxZoom: 18,
+      scrollWheelZoom: false,
+    });
+    map.attributionControl.setPrefix(false);
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution:
+          "Tiles &copy; Esri &mdash; Sources: Esri, HERE, Garmin, Intermap, INCREMENT P, NRCan, USGS, Esri Japan, METI, Esri China (Hong Kong), Esri Korea, Esri Thailand, NGCC, OpenStreetMap contributors, and the GIS User Community",
+        maxZoom: 18,
+      },
+    ).addTo(map);
+
+    const markers = new Map<string, L.Marker>();
+    let userMarker: L.CircleMarker | undefined;
+
+    function iconFor(pin: ExplorerPin, [offsetX, offsetY]: [number, number] = [0, 0]) {
+      const html = pin.kind === "plot"
+        ? '<span class="projects-explorer-marker projects-explorer-marker--plot" aria-hidden="true"></span>'
+        : `<span class="projects-explorer-marker projects-explorer-marker--house projects-explorer-marker--${pin.status}" aria-hidden="true"><svg viewBox="0 0 32 36" width="32" height="36"><path d="M2.5 14.5 L16 3.5 L29.5 14.5 V33.5 H2.5 Z" stroke="#171915" stroke-width="1.8" stroke-linejoin="round"/><rect x="13" y="22" width="6" height="11.5"/></svg></span>`;
+      return L.divIcon({
+        className: "projects-explorer-icon",
+        html,
+        iconSize: pin.kind === "plot" ? [24, 24] : [32, 36],
+        iconAnchor: pin.kind === "plot" ? [12 - offsetX, 12 - offsetY] : [16 - offsetX, 36 - offsetY],
+        tooltipAnchor: pin.kind === "plot" ? [offsetX, offsetY - 12] : [offsetX, offsetY - 30],
+      });
+    }
+
+    function syncQuery(pinId?: string) {
+      const next = new URLSearchParams(window.location.search);
+      if (activeView === "list") next.set("view", "list");
+      else next.delete("view");
+      const statuses = allowedStatuses.filter((status) => activeStatuses.has(status));
+      if (statuses.join(",") === defaultStatuses.join(",")) next.delete("layers");
+      else next.set("layers", statuses.join(","));
+      if (pinId) next.set("pin", pinId);
+      else next.delete("pin");
+      const queryString = next.toString();
+      const nextUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}${window.location.hash}`;
+      window.history.replaceState({}, "", nextUrl);
+    }
+
+    function closePreview(restoreFocus = true) {
+      const previousTrigger = lastTrigger;
+      selectedPin = undefined;
+      previewPanel.hidden = true;
+      explorerRoot.querySelectorAll("[data-explorer-pin]").forEach((card) => card.removeAttribute("data-selected"));
+      syncQuery();
+      lastTrigger = null;
+      if (!restoreFocus) return;
+      const fallback = explorerRoot.querySelector<HTMLElement>(`[data-explorer-view="${activeView}"]`);
+      const focusTarget = previousTrigger?.isConnected && previousTrigger.getClientRects().length
+        ? previousTrigger
+        : fallback;
+      focusTarget?.focus({ preventScroll: true });
+    }
+
+    function openPreview(pin: ExplorerPin, trigger?: HTMLElement | null) {
+      selectedPin = pin;
+      lastTrigger = trigger ?? null;
+      if (previewImageWrap && previewImage) {
+        previewImageWrap.hidden = !pin.image;
+        if (pin.image) {
+          previewImage.src = pin.image;
+          previewImage.alt = pin.title;
+        } else {
+          previewImage.removeAttribute("src");
+          previewImage.alt = "";
+        }
+      }
+      if (previewPlot) previewPlot.hidden = pin.kind !== "plot";
+      if (previewStatus) previewStatus.textContent = pin.kind === "plot" ? "Upcoming opportunity" : pin.statusLabel;
+      if (previewTitle) previewTitle.textContent = pin.previewTitle;
+      if (previewLocation) previewLocation.textContent = pin.kind === "plot" ? pin.title : pin.location;
+      if (previewSummary) previewSummary.textContent = pin.summary;
+      if (whatsappLink) {
+        whatsappLink.href = pin.whatsapp;
+        whatsappLink.firstChild!.textContent = pin.kind === "plot" ? "I have a plot " : "WhatsApp ";
+      }
+      if (projectLink) {
+        projectLink.hidden = !pin.url;
+        if (pin.url) projectLink.href = pin.url;
+        projectLink.dataset.analyticsTarget = `explorer_preview_${pin.id}`;
+      }
+      explorerRoot.querySelectorAll<HTMLElement>("[data-explorer-pin]").forEach((card) => {
+        if (card.dataset.explorerPin === pin.id) card.setAttribute("data-selected", "true");
+        else card.removeAttribute("data-selected");
+      });
+      previewPanel.hidden = false;
+      syncQuery(pin.id);
+      requestAnimationFrame(() => closeButton?.focus({ preventScroll: true }));
+    }
+
+    function prepareMarkerElement(pin: ExplorerPin, marker: L.Marker) {
+      const markerElement = marker.getElement();
+      if (!markerElement || markerElement.dataset.explorerReady) return;
+      markerElement.dataset.explorerReady = "true";
+      markerElement.setAttribute("aria-label", `Preview ${pin.title}`);
+      markerElement.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        marker.fire("click");
+      });
+    }
+
+    for (const pin of pins) {
+      const point = L.latLng(pin.latitude, pin.longitude);
+      const marker = L.marker(point, {
+        icon: iconFor(pin),
+        keyboard: true,
+        riseOnHover: true,
+        title: `Preview ${pin.title}`,
+      });
+      const tooltip = document.createElement("span");
+      const tooltipTitle = document.createElement("strong");
+      const tooltipDetail = document.createElement("small");
+      tooltipTitle.textContent = pin.title;
+      tooltipDetail.textContent = `${pin.statusLabel} · ${pin.location}`;
+      tooltip.append(tooltipTitle, tooltipDetail);
+      marker.bindTooltip(tooltip, { direction: "top", opacity: 1 });
+      marker.on("click", () => openPreview(pin, marker.getElement()));
+      marker.on("add", () => prepareMarkerElement(pin, marker));
+      markers.set(pin.id, marker);
+    }
+
+    function visiblePins() {
+      return pins.filter((pin) => activeStatuses.has(pin.status));
+    }
+
+    function fitVisiblePins() {
+      const visible = visiblePins();
+      if (!visible.length) return;
+      const bounds = L.latLngBounds(visible.map((pin) => [pin.latitude, pin.longitude]));
+      map.fitBounds(bounds, { padding: [44, 44], maxZoom: 12 });
+    }
+
+    interface MarkerRectangle {
+      left: number;
+      top: number;
+      right: number;
+      bottom: number;
+    }
+
+    function markerRectangle(pin: ExplorerPin, point: L.Point, [offsetX, offsetY]: [number, number]) {
+      const width = pin.kind === "plot" ? 24 : 32;
+      const height = pin.kind === "plot" ? 24 : 36;
+      const anchorY = pin.kind === "plot" ? height / 2 : height;
+      return {
+        left: point.x + offsetX - width / 2,
+        top: point.y + offsetY - anchorY,
+        right: point.x + offsetX + width / 2,
+        bottom: point.y + offsetY - anchorY + height,
+      };
+    }
+
+    function overlaps(a: MarkerRectangle, b: MarkerRectangle) {
+      const gap = 6;
+      return a.left < b.right + gap && a.right + gap > b.left && a.top < b.bottom + gap && a.bottom + gap > b.top;
+    }
+
+    function candidateOffsets(seed: number): [number, number][] {
+      const directions: [number, number][] = [
+        [0, -1], [1, 0], [0, 1], [-1, 0],
+        [1, -1], [1, 1], [-1, 1], [-1, -1],
+      ];
+      const candidates: [number, number][] = [[0, 0]];
+      for (let radius = 40; radius <= 160; radius += 40) {
+        for (let index = 0; index < directions.length; index += 1) {
+          const [x, y] = directions[(index + seed) % directions.length];
+          candidates.push([x * radius, y * radius]);
+        }
+      }
+      return candidates;
+    }
+
+    function declutterMarkers() {
+      if (activeView !== "map") return;
+      const occupied: MarkerRectangle[] = [];
+      const mapSize = map.getSize();
+      visiblePins().forEach((pin, pinIndex) => {
+        const marker = markers.get(pin.id);
+        if (!marker || !map.hasLayer(marker)) return;
+        const point = map.latLngToLayerPoint(marker.getLatLng());
+        const candidates = candidateOffsets(pinIndex);
+        const offset = candidates.find((candidate) => {
+          const rectangle = markerRectangle(pin, point, candidate);
+          const insideMap = rectangle.left >= 4 && rectangle.top >= 4 && rectangle.right <= mapSize.x - 4 && rectangle.bottom <= mapSize.y - 4;
+          return insideMap && occupied.every((placed) => !overlaps(rectangle, placed));
+        }) ?? [0, 0];
+        const rectangle = markerRectangle(pin, point, offset);
+        occupied.push(rectangle);
+        marker.setIcon(iconFor(pin, offset));
+        prepareMarkerElement(pin, marker);
+      });
+    }
+
+    function updateVisibility(refit = false) {
+      const visible = new Set(visiblePins().map((pin) => pin.id));
+      for (const [id, marker] of markers) {
+        if (visible.has(id) && !map.hasLayer(marker)) marker.addTo(map);
+        if (!visible.has(id) && map.hasLayer(marker)) marker.removeFrom(map);
+      }
+      explorerRoot.querySelectorAll<HTMLElement>("[data-explorer-pin]").forEach((card) => {
+        card.hidden = !visible.has(card.dataset.explorerPin ?? "");
+      });
+      explorerRoot.querySelectorAll<HTMLButtonElement>("[data-explorer-filter]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(activeStatuses.has(button.dataset.explorerFilter as ExplorerPin["status"])));
+      });
+      if (count) count.textContent = `${visible.size} ${visible.size === 1 ? "location" : "locations"} in view`;
+      if (selectedPin && !visible.has(selectedPin.id)) closePreview(false);
+      if (refit && activeView === "map") fitVisiblePins();
+      requestAnimationFrame(declutterMarkers);
+    }
+
+    function setView(view: "map" | "list") {
+      if (selectedPin && view !== activeView) closePreview(false);
+      activeView = view;
+      mapRoot.hidden = view !== "map";
+      listRoot.hidden = view !== "list";
+      explorerRoot.querySelectorAll<HTMLButtonElement>("[data-explorer-view]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.explorerView === view));
+      });
+      syncQuery(selectedPin?.id);
+      if (view === "map") {
+        requestAnimationFrame(() => {
+          map.invalidateSize();
+          declutterMarkers();
+        });
+      }
+    }
+
+    explorerRoot.querySelectorAll<HTMLButtonElement>("[data-explorer-filter]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const status = button.dataset.explorerFilter as ExplorerPin["status"];
+        if (activeStatuses.has(status)) {
+          if (activeStatuses.size === 1) return;
+          activeStatuses.delete(status);
+        } else activeStatuses.add(status);
+        updateVisibility(true);
+        syncQuery(selectedPin?.id);
+      });
+    });
+
+    explorerRoot.querySelectorAll<HTMLButtonElement>("[data-explorer-view]").forEach((button) => {
+      button.addEventListener("click", () => setView(button.dataset.explorerView === "list" ? "list" : "map"));
+    });
+
+    explorerRoot.querySelectorAll<HTMLButtonElement>("[data-explorer-pin]").forEach((card) => {
+      card.addEventListener("click", () => {
+        const pin = pinById.get(card.dataset.explorerPin ?? "");
+        if (pin) openPreview(pin, card);
+      });
+    });
+
+    closeButton?.addEventListener("click", () => closePreview());
+    previewPanel.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        previewPanel.querySelectorAll<HTMLElement>('button:not([hidden]), a[href]:not([hidden])'),
+      ).filter((element) => element.getClientRects().length > 0);
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (!first || !last) return;
+      const activeElement = document.activeElement as HTMLElement | null;
+      if (event.shiftKey && (!activeElement || !focusable.includes(activeElement) || activeElement === first)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (!activeElement || !focusable.includes(activeElement) || activeElement === last)) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !previewPanel.hidden) closePreview();
+    });
+
+    explorerRoot.querySelector<HTMLButtonElement>("[data-explorer-locate]")?.addEventListener("click", (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      if (!navigator.geolocation) {
+        if (note) {
+          note.hidden = false;
+          note.textContent = "Location is not available in this browser.";
+        }
+        return;
+      }
+      button.disabled = true;
+      button.lastChild!.textContent = " Finding you";
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          button.disabled = false;
+          button.lastChild!.textContent = " Near me";
+          const point = L.latLng(position.coords.latitude, position.coords.longitude);
+          if (point.lat < 12.82 || point.lat > 13.25 || point.lng < 80.08 || point.lng > 80.35) {
+            if (note) {
+              note.hidden = false;
+              note.textContent = "The nearby-project search currently covers Chennai.";
+            }
+            return;
+          }
+          setView("map");
+          userMarker?.removeFrom(map);
+          userMarker = L.circleMarker(point, {
+            radius: 6,
+            color: "#fffdf8",
+            weight: 3,
+            fillColor: "#a94e32",
+            fillOpacity: 1,
+          }).addTo(map);
+          map.setView(point, 14);
+          const nearest = housePins.reduce((best, pin) => {
+            const distance = point.distanceTo([pin.latitude, pin.longitude]);
+            return !best || distance < best.distance ? { pin, distance } : best;
+          }, undefined as { pin: ExplorerPin; distance: number } | undefined);
+          if (note && nearest) {
+            note.hidden = false;
+            note.textContent = `We have already built near ${nearest.pin.location}.`;
+          }
+        },
+        () => {
+          button.disabled = false;
+          button.lastChild!.textContent = " Near me";
+          if (note) {
+            note.hidden = false;
+            note.textContent = "Turn on location access to find the nearest project.";
+          }
+        },
+        { maximumAge: 60_000, timeout: 8000 },
+      );
+    });
+
+    const requestedPin = pinById.get(query.get("pin") ?? "");
+    if (requestedPin) activeStatuses.add(requestedPin.status);
+    updateVisibility();
+    setView(activeView);
+    fitVisiblePins();
+    map.on("zoomend resize", declutterMarkers);
+    if (requestedPin) openPreview(requestedPin);
+  }
+</script>

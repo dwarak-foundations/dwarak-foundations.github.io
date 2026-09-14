@@ -9,7 +9,7 @@ import SectionHeading from "@/components/SectionHeading.astro";
 import { byOrder } from "@/lib/content";
 
 const projects = (await getCollection("projects")).sort(byOrder);
-const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 3);
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 2);
 const testimonials = (await getCollection("testimonials"))
   .filter((testimonial) => testimonial.data.featured)
   .sort(byOrder)

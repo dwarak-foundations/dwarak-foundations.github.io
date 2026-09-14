@@ -27,7 +27,7 @@ const testimonials = (await getCollection("testimonials")).sort(byOrder);
   </header>
 
   <section class="section">
-    <div class="quotes-grid shell">
+    <div class="quotes-grid quotes-grid--masonry shell">
       {testimonials.map((testimonial, index) => <QuoteCard testimonial={testimonial} index={index} />)}
     </div>
   </section>
