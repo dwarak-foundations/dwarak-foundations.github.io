@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { testimonial, index = 0 } = Astro.props;
-const englishQuote = testimonial.body.trim();
+const englishQuote = testimonial.body?.trim() ?? "";
 const tamilQuote = tamilTestimonials[testimonial.id] ?? englishQuote;
 ---
 
