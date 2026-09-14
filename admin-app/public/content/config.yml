@@ -70,6 +70,12 @@ collections:
           - { label: Value, name: value, widget: string, hint: "Example: 6 apartments" }
       - { label: TNRERA number, name: rera, widget: string, required: false }
       - { label: Brochure, name: brochure, widget: file, required: false, media_folder: assets, public_folder: / }
+      - label: Map coordinates
+        name: coordinates
+        widget: object
+        fields:
+          - { label: Latitude, name: latitude, widget: number, value_type: float, min: -90, max: 90, step: 0.000001 }
+          - { label: Longitude, name: longitude, widget: number, value_type: float, min: -180, max: 180, step: 0.000001 }
       - { label: Google Maps embed URL, name: mapEmbed, widget: string }
       - { label: Legacy URL, name: legacyPath, widget: hidden, required: false, default: "" }
       - { label: Search description, name: seoDescription, widget: text, pattern: ['^.{80,170}$', 'Use between 80 and 170 characters.'] }

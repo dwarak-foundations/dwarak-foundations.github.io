@@ -1,0 +1,160 @@
+---
+import type { CollectionEntry } from "astro:content";
+import "leaflet/dist/leaflet.css";
+import { projectPath, projectStatus } from "@/lib/content";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+const mapProjects = projects.map((project) => ({
+  id: project.id,
+  title: project.data.title,
+  location: project.data.location,
+  status: projectStatus(project.data.status),
+  url: projectPath(project),
+  latitude: project.data.coordinates.latitude,
+  longitude: project.data.coordinates.longitude,
+}));
+const serializedProjects = JSON.stringify(mapProjects).replaceAll("<", "\\u003c");
+---
+
+<section class="section section--deep project-map-section" aria-labelledby="project-map-title">
+  <div class="shell">
+    <div class="project-map-heading" data-reveal>
+      <div>
+        <p class="eyebrow">Homes across Chennai</p>
+        <h2 id="project-map-title">Find our work on the map.</h2>
+      </div>
+      <p>Select a house to open its project page, or use the directory alongside the map.</p>
+    </div>
+    <div class="project-map-layout" data-reveal>
+      <div
+        id="project-map"
+        class="project-map"
+        role="region"
+        aria-label="Interactive map of Dwarak Foundations projects across Chennai"
+      ></div>
+      <nav class="project-map-directory" aria-label="Projects shown on the map">
+        {projects.map((project, index) => (
+          <a
+            href={projectPath(project)}
+            data-map-project={project.id}
+            data-analytics-event="project_opened"
+            data-analytics-target={`map_directory_${project.id}`}
+          >
+            <span class="project-map-directory__number">{String(index + 1).padStart(2, "0")}</span>
+            <span>
+              <strong>{project.data.title}</strong>
+              <small>{project.data.location}</small>
+            </span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+  <script is:inline id="project-map-data" type="application/json" set:html={serializedProjects}></script>
+</section>
+
+<script>
+  import * as L from "leaflet";
+
+  interface MapProject {
+    id: string;
+    title: string;
+    location: string;
+    status: string;
+    url: string;
+    latitude: number;
+    longitude: number;
+  }
+
+  const mapElement = document.querySelector<HTMLElement>("#project-map");
+  const dataElement = document.querySelector<HTMLScriptElement>("#project-map-data");
+
+  if (mapElement && dataElement) {
+    const projects = JSON.parse(dataElement.textContent ?? "[]") as MapProject[];
+    const map = L.map(mapElement, {
+      center: [12.93752, 80.209528],
+      zoom: 12,
+      minZoom: 10,
+      maxZoom: 18,
+      scrollWheelZoom: false,
+    });
+
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution:
+          "Tiles &copy; Esri &mdash; Sources: Esri, HERE, Garmin, Intermap, INCREMENT P, NRCan, USGS, Esri Japan, METI, Esri China (Hong Kong), Esri Korea, Esri Thailand, NGCC, OpenStreetMap contributors, and the GIS User Community",
+        maxZoom: 18,
+      },
+    ).addTo(map);
+
+    const bounds = L.latLngBounds([]);
+    const markers = new Map<string, L.Marker>();
+    const crowdedMarkerOffsets: Record<string, [number, number]> = {
+      atlantis: [36, 20],
+      sumana: [14, -38],
+      sushruth: [14, 0],
+      prem: [14, 38],
+    };
+    const house = `
+      <span class="project-map-marker" aria-hidden="true">
+        <svg viewBox="0 0 32 36" width="32" height="36">
+          <path d="M2.5 14.5 L16 3.5 L29.5 14.5 V33.5 H2.5 Z" fill="#a94e32" stroke="#171915" stroke-width="1.8" stroke-linejoin="round" />
+          <rect x="13" y="22" width="6" height="11.5" fill="#fffdf8" />
+        </svg>
+      </span>`;
+
+    for (const project of projects) {
+      const point = L.latLng(project.latitude, project.longitude);
+      const [offsetX, offsetY] = crowdedMarkerOffsets[project.id] ?? [0, 0];
+      const marker = L.marker(point, {
+        icon: L.divIcon({
+          className: "project-map-icon",
+          html: house,
+          iconSize: [32, 36],
+          iconAnchor: [16 - offsetX, 36 - offsetY],
+          tooltipAnchor: [offsetX, offsetY - 30],
+        }),
+        keyboard: true,
+        riseOnHover: true,
+        title: `Open ${project.title}`,
+      }).addTo(map);
+      const markerElement = marker.getElement();
+      markerElement?.setAttribute("data-analytics-event", "project_opened");
+      markerElement?.setAttribute("data-analytics-target", `map_marker_${project.id}`);
+      markerElement?.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        markerElement.click();
+      });
+
+      const tooltip = document.createElement("span");
+      const title = document.createElement("strong");
+      const detail = document.createElement("small");
+      title.textContent = project.title;
+      detail.textContent = `${project.status} · ${project.location}`;
+      tooltip.append(title, detail);
+      marker.bindTooltip(tooltip, { direction: "top", opacity: 1 });
+      marker.on("click", () => window.location.assign(project.url));
+      markers.set(project.id, marker);
+      bounds.extend(point);
+    }
+
+    if (bounds.isValid()) map.fitBounds(bounds, { padding: [42, 42], maxZoom: 12 });
+    requestAnimationFrame(() => map.invalidateSize());
+
+    document.querySelectorAll<HTMLElement>("[data-map-project]").forEach((link) => {
+      const marker = markers.get(link.dataset.mapProject ?? "");
+      if (!marker) return;
+      link.addEventListener("mouseenter", () => marker.openTooltip());
+      link.addEventListener("mouseleave", () => marker.closeTooltip());
+      link.addEventListener("focus", () => marker.openTooltip());
+      link.addEventListener("blur", () => marker.closeTooltip());
+    });
+  }
+</script>

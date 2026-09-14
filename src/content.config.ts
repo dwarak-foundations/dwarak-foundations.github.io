@@ -32,6 +32,10 @@ const projects = defineCollection({
     ),
     rera: z.string().optional(),
     brochure: z.string().optional(),
+    coordinates: z.object({
+      latitude: z.number().min(-90).max(90),
+      longitude: z.number().min(-180).max(180),
+    }),
     mapEmbed: z.url(),
     legacyPath: z.string().optional(),
     seoDescription: z.string(),

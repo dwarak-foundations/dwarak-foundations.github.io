@@ -23,6 +23,9 @@ facts:
     value: 6 apartments
   - label: Plan
     value: Two 2 BHK homes per floor
+coordinates:
+  latitude: 12.996988
+  longitude: 80.250678
 mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d497613.6590837587!2d80.250678!3d12.996988000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52678c131d40d3%3A0x2b0776e5fdc813ac!2s9th%20Cross%20St%2C%20Indira%20Nagar%2C%20Adyar%2C%20Chennai%2C%20Tamil%20Nadu%20600020%2C%20India!5e0!3m2!1sen!2sus!4v1636089956223!5m2!1sen!2sus"
 legacyPath: /html/pages/gopi.html
 seoDescription: Explore Dwarak Gopikrishna, a six-apartment residential project completed by Dwarak Foundations in Adyar, Chennai.

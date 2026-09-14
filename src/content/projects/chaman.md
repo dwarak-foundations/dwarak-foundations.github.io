@@ -22,7 +22,10 @@ facts:
     value: Stilt plus two floors
   - label: Homes
     value: 6 apartments
-mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d497792.0422725439!2d80.07493500000001!3d12.9077!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525eb3e9856615%3A0xd72f04f0fdb93c19!2sVengavasal%2C%20Koilambakkam%2C%20Tamil%20Nadu%2C%20India!5e0!3m2!1sen!2sus!4v1636090262645!5m2!1sen!2sus"
+coordinates:
+  latitude: 12.9175
+  longitude: 80.1652
+mapEmbed: "https://www.google.com/maps?q=12.9175,80.1652&z=16&output=embed"
 legacyPath: /html/pages/chaman.html
 seoDescription: Explore Dwarak Chaman, a six-apartment residential project completed by Dwarak Foundations in Vengaivasal, Chennai.
 ---

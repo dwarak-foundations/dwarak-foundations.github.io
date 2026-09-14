@@ -20,6 +20,9 @@ facts:
     value: 5 grounds
   - label: Built area
     value: 10,350 sq. ft.
+coordinates:
+  latitude: 12.917741
+  longitude: 80.253508
 mapEmbed: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d497772.0422772639!2d80.253508!3d12.917741!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525dc31c0d73a5%3A0x199d6ae6c6aa3816!2sMk%20Radha%20Avenue!5e0!3m2!1sen!2sus!4v1636090204481!5m2!1sen!2sus"
 legacyPath: /html/pages/golden.html
 seoDescription: Explore the 10,350-square-foot Golden Beach Bungalow completed by Dwarak Foundations in Injambakkam, Chennai.
