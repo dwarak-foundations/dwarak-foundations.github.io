@@ -6,16 +6,14 @@
   "description": "Website and Cloudflare services for Dwarak Foundations Chennai LLP.",
   "scripts": {
     "dev": "npm run prepare:assets && astro dev",
-    "build": "npm run build:site && npm run check:workers && npm run build:admin",
+    "build": "npm run build:site && npm run check:workers",
     "build:site": "npm run prepare:assets && astro check && astro build",
-    "build:admin": "vite build --config admin-app/vite.config.ts",
     "check": "astro check && npm run check:workers",
     "check:workers": "tsc --project workers/tsconfig.json",
     "prepare:assets": "node scripts/prepare-assets.mjs",
     "test": "npm run build && node scripts/validate-build.mjs",
     "preview": "astro preview",
-    "cf:events": "wrangler dev --config workers/events/wrangler.jsonc",
-    "cf:admin": "wrangler dev --config workers/admin/wrangler.jsonc"
+    "cf:events": "wrangler dev --config workers/events/wrangler.jsonc"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -23,7 +21,6 @@
     "@fontsource-variable/newsreader": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
-    "decap-cms-app": "^3.16.2",
     "leaflet": "^1.9.4",
     "tailwindcss": "^4.3.3"
   },
@@ -38,9 +35,5 @@
   },
   "engines": {
     "node": ">=22.19.0"
-  },
-  "overrides": {
-    "trim": "0.0.3",
-    "uuid": "11.1.1"
   }
 }

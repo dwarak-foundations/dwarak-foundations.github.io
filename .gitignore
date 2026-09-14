@@ -1,6 +1,5 @@
 node_modules/
 dist/
-admin-dist/
 public/
 .astro/
 .wrangler/

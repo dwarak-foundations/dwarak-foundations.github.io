@@ -11,12 +11,10 @@
     ".astro/types.d.ts",
     "astro.config.ts",
     "src/**/*.astro",
-    "src/**/*.ts",
-    "admin-app/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "dist",
-    "admin-dist",
     "node_modules",
     "assets/js",
     "src/assets",
