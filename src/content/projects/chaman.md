@@ -1,7 +1,8 @@
 ---
 title: Dwarak Chaman
-summary: A six-home residential development designed for comfortable, closely connected living in Vengaivasal.
-location: Vengaivasal, Chennai
+summary: Six flats in Vengaivasal. Completed May 2017.
+location: Vengaivasal
+street: Vengaivasal
 address: Vengaivasal, Chennai 600100
 status: completed
 completion: May 2017

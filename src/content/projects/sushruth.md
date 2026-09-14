@@ -1,10 +1,9 @@
 ---
 title: Dwarak Sushruth
-summary: Four private residences on Rajam Nagar 1st Street, built with a focus on straightforward and lasting design.
-location: S. Kolathur, Chennai
-address: |-
-  Plot No. 7, Rajam Nagar 1st Street,
-  S. Kolathur, Chennai 600129
+summary: Four flats on Rajam Nagar, S. Kolathur. Completed June 2019.
+location: S. Kolathur
+street: Rajam Nagar 1st Street
+address: Plot No. 7, Rajam Nagar 1st Street, S. Kolathur, Chennai 600129
 status: completed
 completion: June 2019
 featured: false

@@ -1,10 +1,9 @@
 ---
 title: Dwarak Shree
-summary: A four-home apartment building created for an established residential setting in Krishna Nagar.
-location: Perumbakkam, Chennai
-address: |-
-  Krishna Nagar,
-  Perumbakkam, Chennai 600100
+summary: Four flats in Krishna Nagar, Perumbakkam. Completed November 2015.
+location: Perumbakkam
+street: Krishna Nagar
+address: Krishna Nagar, Perumbakkam, Chennai 600100
 status: completed
 completion: November 2015
 featured: false

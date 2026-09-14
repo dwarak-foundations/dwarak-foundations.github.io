@@ -1,10 +1,9 @@
 ---
 title: Golden Beach Bungalow
-summary: A substantial 10,350-square-foot private residence set across five grounds near Chennai's coast.
-location: Injambakkam, Chennai
-address: |-
-  M.K. Radha Avenue,
-  Injambakkam, Chennai 600115
+summary: Bungalow on 5 grounds, 10,350 sq.ft, Injambakkam. Completed January 2020.
+location: Injambakkam
+street: M.K. Radha Avenue
+address: M.K. Radha Avenue, Injambakkam, Chennai 600115
 status: completed
 completion: January 2020
 featured: false

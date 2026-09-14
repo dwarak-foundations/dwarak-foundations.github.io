@@ -8,6 +8,7 @@ const projects = defineCollection({
     title: z.string(),
     summary: z.string(),
     location: z.string(),
+    street: z.string(),
     address: z.string(),
     status: z.enum(["completed", "ongoing", "upcoming"]),
     completion: z.string().optional(),

@@ -1,10 +1,9 @@
 ---
 title: Dwarak Prem
-summary: Four residences built as part of a larger joint-venture development on Rajam Nagar 1st Street.
-location: S. Kolathur, Chennai
-address: |-
-  Plot No. 8, Rajam Nagar 1st Street,
-  S. Kolathur, Chennai 600129
+summary: Four flats on Rajam Nagar, S. Kolathur. Completed June 2019.
+location: S. Kolathur
+street: Rajam Nagar 1st Street
+address: Plot No. 8, Rajam Nagar 1st Street, S. Kolathur, Chennai 600129
 status: completed
 completion: June 2019
 featured: false

@@ -1,7 +1,8 @@
 ---
 title: S. Kolathur Villa
-summary: An individual two-level home with 2,300 square feet of carefully planned living space.
-location: S. Kolathur, Chennai
+summary: Ground and first floor villa, 2,300 sq.ft. Completed January 2017.
+location: S. Kolathur
+street: S. Kolathur
 address: S. Kolathur, Chennai 600091
 status: completed
 completion: January 2017

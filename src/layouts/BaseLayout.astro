@@ -48,7 +48,7 @@ const serializedSchema = JSON.stringify(schema ?? organizationSchema).replaceAll
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#f2ede4" />
+    <meta name="theme-color" content="#efeae2" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/img/favicon/favicon-32x32.png" />
@@ -66,7 +66,15 @@ const serializedSchema = JSON.stringify(schema ?? organizationSchema).replaceAll
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
     <title>{pageTitle}</title>
-    <script is:inline>document.documentElement.classList.add("js");</script>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("dwarak-locale") === "ta") {
+          document.documentElement.lang = "ta-IN";
+          document.documentElement.dataset.locale = "ta";
+        }
+      } catch {}
+    </script>
     <script is:inline type="application/ld+json" set:html={serializedSchema} />
   </head>
   <body>
@@ -76,6 +84,10 @@ const serializedSchema = JSON.stringify(schema ?? organizationSchema).replaceAll
       <slot />
     </main>
     <Footer />
+    <script>
+      import { initializeLocale } from "@/lib/i18n";
+      initializeLocale();
+    </script>
     <script is:inline>
       (() => {
         const endpoint = "/api/events";

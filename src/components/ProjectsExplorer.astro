@@ -15,10 +15,13 @@ interface ExplorerPin {
   title: string;
   previewTitle: string;
   location: string;
+  street: string;
+  year?: string;
   summary: string;
   image?: string;
   url?: string;
   whatsapp: string;
+  whatsappTa: string;
   latitude: number;
   longitude: number;
 }
@@ -27,6 +30,17 @@ const whatsappNumber = "919884409031";
 const whatsappHref = (message: string) =>
   `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 const { projects } = Astro.props;
+const tamilProjectCopy: Record<string, { title: string; street: string }> = {
+  atlantis: { title: "துவாரக் அட்லாண்டிஸ்", street: "பாரி தெரு" },
+  gopikrishna: { title: "துவாரக் கோபிகிருஷ்ணா", street: "9-வது குறுக்குத் தெரு" },
+  sumana: { title: "துவாரக் சுமனா", street: "ராஜம் நகர் முதல் தெரு" },
+  chaman: { title: "துவாரக் சமன்", street: "வெங்கைவாசல்" },
+  sushruth: { title: "துவாரக் சுஸ்ருத்", street: "ராஜம் நகர் முதல் தெரு" },
+  "s-kolathur-villa": { title: "எஸ். கொளத்தூர் வில்லா", street: "எஸ். கொளத்தூர்" },
+  "golden-beach-bungalow": { title: "கோல்டன் பீச் பங்களா", street: "எம்.கே. ராதா அவென்யூ" },
+  shree: { title: "துவாரக் ஸ்ரீ", street: "கிருஷ்ணா நகர்" },
+  prem: { title: "துவாரக் பிரேம்", street: "ராஜம் நகர் முதல் தெரு" },
+};
 const projectPins: ExplorerPin[] = projects.map((project) => ({
   id: project.id,
   kind: "house",
@@ -35,10 +49,15 @@ const projectPins: ExplorerPin[] = projects.map((project) => ({
   title: project.data.title,
   previewTitle: project.data.title,
   location: project.data.location,
+  street: project.data.street,
+  year: project.data.completion?.match(/\d{4}$/)?.[0],
   summary: project.data.summary,
   image: project.data.hero.src,
   url: projectPath(project),
-  whatsapp: whatsappHref(`Hello, I am asking about ${project.data.title} in ${project.data.location}.`),
+  whatsapp: whatsappHref(`Hello, I am asking about ${project.data.title} on ${project.data.street}.`),
+  whatsappTa: whatsappHref(
+    `வணக்கம், ${tamilProjectCopy[project.id]?.street ?? project.data.street} தெருவில் ${tamilProjectCopy[project.id]?.title ?? project.data.title} பற்றி கேட்கிறேன்.`,
+  ),
   latitude: project.data.coordinates.latitude,
   longitude: project.data.coordinates.longitude,
 }));
@@ -50,9 +69,11 @@ const futurePins: ExplorerPin[] = [
     statusLabel: "Upcoming",
     title: "Looking in Pallikaranai",
     previewTitle: "We are looking for land here. Is this yours?",
-    location: "Pallikaranai, Chennai",
+    location: "Pallikaranai",
+    street: "Pallikaranai",
     summary: "A small luxury apartment building, if the ground is right.",
     whatsapp: whatsappHref("Hello, I have a plot in Pallikaranai."),
+    whatsappTa: whatsappHref("வணக்கம், பள்ளிக்கரணையில் என்னிடம் மனை உள்ளது."),
     latitude: 12.9338,
     longitude: 80.2185,
   },
@@ -63,9 +84,11 @@ const futurePins: ExplorerPin[] = [
     statusLabel: "Upcoming",
     title: "Looking in Perumbakkam",
     previewTitle: "We are looking for land here. Is this yours?",
-    location: "Perumbakkam, Chennai",
-    summary: "Two to four grounds. A joint venture shaped with the same care as our Rajam Nagar homes.",
+    location: "Perumbakkam",
+    street: "Perumbakkam",
+    summary: "Two to four grounds. Joint venture, as on Rajam Nagar.",
     whatsapp: whatsappHref("Hello, I have a plot in Perumbakkam."),
+    whatsappTa: whatsappHref("வணக்கம், பெரும்பாக்கத்தில் என்னிடம் மனை உள்ளது."),
     latitude: 12.903,
     longitude: 80.1995,
   },
@@ -74,16 +97,8 @@ const pins = [...projectPins, ...futurePins];
 const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
 ---
 
-<section class="section projects-explorer-section" aria-labelledby="projects-explorer-title">
+<section class="section projects-explorer-section" aria-label="Project map and list">
   <div class="shell">
-    <div class="projects-explorer-heading" data-reveal>
-      <div>
-        <p class="eyebrow">Explore by place</p>
-        <h2 id="projects-explorer-title">Every building has an address and a story.</h2>
-      </div>
-      <p>Choose a house or plot for a quick preview, then open the project or start a WhatsApp conversation.</p>
-    </div>
-
     <div class="projects-explorer" data-projects-explorer data-reveal>
       <div class="projects-explorer-toolbar">
         <div class="projects-explorer-toolbar__group" role="group" aria-label="Filter projects by status">
@@ -128,7 +143,7 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
               <span class="projects-explorer-card__copy">
                 <small>{pin.statusLabel}</small>
                 <strong>{pin.title}</strong>
-                <span>{pin.location}</span>
+                <span>{pin.location}{pin.year ? ` · ${pin.year}` : ""}</span>
               </span>
             </button>
           ))}
@@ -149,7 +164,7 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
           <div class="projects-explorer-preview__plot" data-explorer-preview-plot hidden aria-hidden="true"></div>
           <div class="projects-explorer-preview__body">
             <p class="eyebrow" data-explorer-preview-status></p>
-            <h3 id="projects-explorer-preview-title" data-explorer-preview-title></h3>
+            <h2 id="projects-explorer-preview-title" data-explorer-preview-title></h2>
             <p class="projects-explorer-preview__location" data-explorer-preview-location></p>
             <p data-explorer-preview-summary></p>
             <div class="projects-explorer-preview__actions">
@@ -180,10 +195,13 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
     title: string;
     previewTitle: string;
     location: string;
+    street: string;
+    year?: string;
     summary: string;
     image?: string;
     url?: string;
     whatsapp: string;
+    whatsappTa: string;
     latitude: number;
     longitude: number;
   }
@@ -235,14 +253,14 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
       zoom: 12,
       minZoom: 10,
       maxZoom: 18,
-      scrollWheelZoom: false,
+      scrollWheelZoom: true,
     });
     map.attributionControl.setPrefix(false);
+    map.zoomControl.setPosition("bottomright");
     L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       {
-        attribution:
-          "Tiles &copy; Esri &mdash; Sources: Esri, HERE, Garmin, Intermap, INCREMENT P, NRCan, USGS, Esri Japan, METI, Esri China (Hong Kong), Esri Korea, Esri Thailand, NGCC, OpenStreetMap contributors, and the GIS User Community",
+        attribution: "Tiles &copy; Esri",
         maxZoom: 18,
       },
     ).addTo(map);
@@ -253,7 +271,7 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
     function iconFor(pin: ExplorerPin, [offsetX, offsetY]: [number, number] = [0, 0]) {
       const html = pin.kind === "plot"
         ? '<span class="projects-explorer-marker projects-explorer-marker--plot" aria-hidden="true"></span>'
-        : `<span class="projects-explorer-marker projects-explorer-marker--house projects-explorer-marker--${pin.status}" aria-hidden="true"><svg viewBox="0 0 32 36" width="32" height="36"><path d="M2.5 14.5 L16 3.5 L29.5 14.5 V33.5 H2.5 Z" stroke="#171915" stroke-width="1.8" stroke-linejoin="round"/><rect x="13" y="22" width="6" height="11.5"/></svg></span>`;
+        : `<span class="projects-explorer-marker projects-explorer-marker--house projects-explorer-marker--${pin.status}" aria-hidden="true"><svg viewBox="0 0 32 36" width="32" height="36"><path d="M2.5 14.5 L16 3.5 L29.5 14.5 V33.5 H2.5 Z" stroke="#231f20" stroke-width="1.8" stroke-linejoin="round"/><rect x="13" y="22" width="6" height="11.5"/></svg></span>`;
       return L.divIcon({
         className: "projects-explorer-icon",
         html,
@@ -308,10 +326,10 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
       if (previewPlot) previewPlot.hidden = pin.kind !== "plot";
       if (previewStatus) previewStatus.textContent = pin.kind === "plot" ? "Upcoming opportunity" : pin.statusLabel;
       if (previewTitle) previewTitle.textContent = pin.previewTitle;
-      if (previewLocation) previewLocation.textContent = pin.kind === "plot" ? pin.title : pin.location;
+      if (previewLocation) previewLocation.textContent = `${pin.street ?? pin.location}${pin.year ? ` · ${pin.year}` : ""}`;
       if (previewSummary) previewSummary.textContent = pin.summary;
       if (whatsappLink) {
-        whatsappLink.href = pin.whatsapp;
+        whatsappLink.href = document.documentElement.dataset.locale === "ta" ? pin.whatsappTa : pin.whatsapp;
         whatsappLink.firstChild!.textContent = pin.kind === "plot" ? "I have a plot " : "WhatsApp ";
       }
       if (projectLink) {
@@ -512,6 +530,12 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
       if (event.key === "Escape" && !previewPanel.hidden) closePreview();
     });
 
+    window.addEventListener("localechange", (event) => {
+      if (!selectedPin || !whatsappLink) return;
+      const locale = (event as CustomEvent<{ locale?: string }>).detail?.locale;
+      whatsappLink.href = locale === "ta" ? selectedPin.whatsappTa : selectedPin.whatsapp;
+    });
+
     explorerRoot.querySelector<HTMLButtonElement>("[data-explorer-locate]")?.addEventListener("click", (event) => {
       const button = event.currentTarget as HTMLButtonElement;
       if (!navigator.geolocation) {
@@ -539,9 +563,9 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
           userMarker?.removeFrom(map);
           userMarker = L.circleMarker(point, {
             radius: 6,
-            color: "#fffdf8",
+            color: "#fbf8f3",
             weight: 3,
-            fillColor: "#a94e32",
+            fillColor: "#d52027",
             fillOpacity: 1,
           }).addTo(map);
           map.setView(point, 14);
@@ -572,6 +596,17 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
     setView(activeView);
     fitVisiblePins();
     map.on("zoomend resize", declutterMarkers);
+    let observedWidth = mapRoot.clientWidth;
+    new ResizeObserver(([entry]) => {
+      const width = Math.round(entry.contentRect.width);
+      if (!width || width === observedWidth) return;
+      observedWidth = width;
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+        if (!userMarker) fitVisiblePins();
+        declutterMarkers();
+      });
+    }).observe(mapRoot);
     if (requestedPin) openPreview(requestedPin);
   }
 </script>

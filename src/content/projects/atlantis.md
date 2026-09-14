@@ -1,11 +1,9 @@
 ---
 title: Dwarak Atlantis
-summary: A ten-home residential development in Pallikaranai, composed as two generous homes on each floor.
-location: Pallikaranai, Chennai
-address: |-
-  Plot No. 53 & 54, Paari Street,
-  VGP Shanthi Nagar,
-  Pallikaranai, Chennai 600100
+summary: Stilt plus five, ten flats on Paari Street, Pallikaranai. TNRERA registered.
+location: Pallikaranai
+street: Paari Street
+address: Plot Nos. 53 & 54, Paari Street, VGP Shanthi Nagar, Pallikaranai, Chennai 600100
 status: ongoing
 featured: true
 order: 1
