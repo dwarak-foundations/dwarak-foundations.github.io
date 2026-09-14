@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { byOrder } from "@/lib/content";
+
+const projects = (await getCollection("projects")).sort(byOrder);
+---
+
+<BaseLayout
+  title="Projects"
+  description="Explore completed residential buildings, apartments, villas, and individual homes by Dwarak Foundations across Chennai."
+>
+  <header class="page-hero">
+    <div class="page-hero__grid shell">
+      <div>
+        <p class="eyebrow">Our portfolio</p>
+        <h1 class="page-title">Places made to be lived in.</h1>
+      </div>
+      <div class="page-hero__aside">
+        <p>
+          A selection of apartment communities, villas, and individual residences delivered across Chennai since 1998.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="shell project-grid">
+      {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    </div>
+  </section>
+
+  <ContactBand />
+</BaseLayout>

@@ -1,0 +1,5 @@
+GITHUB_CLIENT_ID="github-oauth-client-id"
+GITHUB_CLIENT_SECRET="github-oauth-client-secret"
+ACCOUNT_ID="cloudflare-account-id"
+ANALYTICS_API_TOKEN="cloudflare-analytics-read-token"
+WEB_ANALYTICS_SITE_TAG="cloudflare-web-analytics-site-tag"

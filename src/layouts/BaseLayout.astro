@@ -1,0 +1,124 @@
+---
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  image = "/img/projects/atlantis.jpeg",
+  noindex = false,
+  schema,
+} = Astro.props;
+const pageTitle = title === "Dwarak Foundations" ? title : `${title} | Dwarak Foundations`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  name: "Dwarak Foundations Chennai LLP",
+  url: "https://dwarakfoundations.com",
+  logo: "https://dwarakfoundations.com/img/brand/dark.svg",
+  foundingDate: "1998",
+  email: "dwarakfoundations@gmail.com",
+  telephone: "+91-98844-09031",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Plot No. 11A, Ground Floor, Arumugam Nagar 1st Street, IIT Colony Main Road",
+    addressLocality: "Pallikaranai",
+    addressRegion: "Tamil Nadu",
+    postalCode: "600100",
+    addressCountry: "IN",
+  },
+};
+const serializedSchema = JSON.stringify(schema ?? organizationSchema).replaceAll("<", "\\u003c");
+---
+
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f2ede4" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/img/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/img/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dwarak Foundations" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <title>{pageTitle}</title>
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    <script is:inline type="application/ld+json" set:html={serializedSchema} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header pathname={Astro.url.pathname} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>
+      (() => {
+        const endpoint = "/api/events";
+        const allowed = /^[a-z][a-z0-9_]{2,47}$/;
+
+        document.addEventListener("click", (event) => {
+          const element = event.target.closest("[data-analytics-event]");
+          if (!element) return;
+
+          const name = element.dataset.analyticsEvent;
+          if (!name || !allowed.test(name)) return;
+
+          const payload = JSON.stringify({
+            event: name,
+            page: window.location.pathname,
+            target: element.dataset.analyticsTarget || "",
+          });
+
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(endpoint, new Blob([payload], { type: "application/json" }));
+          } else {
+            fetch(endpoint, {
+              method: "POST",
+              body: payload,
+              headers: { "content-type": "application/json" },
+              keepalive: true,
+            }).catch(() => {});
+          }
+        });
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.dataset.visible = "true";
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -8%", threshold: 0.08 },
+        );
+        document.querySelectorAll("[data-reveal]").forEach((element) => observer.observe(element));
+      })();
+    </script>
+  </body>
+</html>

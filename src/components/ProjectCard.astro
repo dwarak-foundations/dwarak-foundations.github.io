@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { projectPath, projectStatus } from "@/lib/content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+---
+
+<article class="project-card" data-reveal style={`--reveal-delay: ${Math.min(index * 70, 280)}ms`}>
+  <a
+    class="project-card__image"
+    href={projectPath(project)}
+    data-analytics-event="project_opened"
+    data-analytics-target={project.id}
+  >
+    <img
+      src={project.data.hero.src}
+      alt={project.data.hero.alt}
+      width="1200"
+      height="900"
+      loading={index < 2 ? "eager" : "lazy"}
+      decoding="async"
+    />
+    <span class="project-card__index">{String(index + 1).padStart(2, "0")}</span>
+  </a>
+  <div class="project-card__body">
+    <div>
+      <p>{projectStatus(project.data.status)} <span aria-hidden="true">/</span> {project.data.location}</p>
+      <h3>
+        <a
+          href={projectPath(project)}
+          data-analytics-event="project_opened"
+          data-analytics-target={project.id}
+        >
+          {project.data.title}
+        </a>
+      </h3>
+    </div>
+    <a
+      class="round-link"
+      href={projectPath(project)}
+      aria-label={`View ${project.data.title}`}
+      tabindex="-1"
+      data-analytics-event="project_opened"
+      data-analytics-target={project.id}
+    >
+      <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</article>

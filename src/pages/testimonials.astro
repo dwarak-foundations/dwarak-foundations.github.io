@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import QuoteCard from "@/components/QuoteCard.astro";
+import { byOrder } from "@/lib/content";
+
+const testimonials = (await getCollection("testimonials")).sort(byOrder);
+---
+
+<BaseLayout
+  title="Client Stories"
+  description="Read what homeowners and development partners say about working with Dwarak Foundations in Chennai."
+>
+  <header class="page-hero">
+    <div class="page-hero__grid shell">
+      <div>
+        <p class="eyebrow">Client stories</p>
+        <h1 class="page-title">Our work, in their words.</h1>
+      </div>
+      <div class="page-hero__aside">
+        <p>
+          Our strongest introductions have always come from the people who know our work first-hand.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="quotes-grid shell">
+      {testimonials.map((testimonial, index) => <QuoteCard testimonial={testimonial} index={index} />)}
+    </div>
+  </section>
+
+  <ContactBand />
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/about/", label: "About" },
+  { href: "/testimonials/", label: "Stories" },
+  { href: "/contact/", label: "Contact" },
+];
+const isActive = (href: string) =>
+  href === "/" ? pathname === href : pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="site-header__inner shell">
+    <a class="brand" href="/" aria-label="Dwarak Foundations home">
+      <img src="/img/brand/dark.svg" width="202" height="72" alt="Dwarak Foundations" />
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {links.map((link) => (
+        <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <a
+      class="header-cta"
+      href="tel:+919884409031"
+      data-analytics-event="phone_clicked"
+      data-analytics-target="header"
+    >
+      Start a conversation
+    </a>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation">
+        <span></span><span></span>
+      </summary>
+      <nav aria-label="Mobile navigation">
+        {links.map((link) => (
+          <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
+            {link.label}
+          </a>
+        ))}
+        <a href="tel:+919884409031" data-analytics-event="phone_clicked" data-analytics-target="mobile_menu">
+          +91 98844 09031
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>

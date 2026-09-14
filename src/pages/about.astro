@@ -1,0 +1,69 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactBand from "@/components/ContactBand.astro";
+---
+
+<BaseLayout
+  title="About"
+  description="Learn about Dwarak Foundations Chennai LLP, a client-focused Chennai construction company established by R. Varadharajan in 1998."
+>
+  <header class="page-hero">
+    <div class="page-hero__grid shell">
+      <div>
+        <p class="eyebrow">Our story</p>
+        <h1 class="page-title">Trust is the structure beneath everything.</h1>
+      </div>
+      <div class="page-hero__aside">
+        <p>
+          Since 1998, our work has grown through the confidence of clients who chose to build with us and then recommended us to others.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="about-lead shell">
+      <figure class="about-portrait" data-reveal>
+        <img
+          src="/img/team/profile-picture-1.jpg"
+          width="900"
+          height="1125"
+          alt="R. Varadharajan, designated partner at Dwarak Foundations"
+        />
+        <figcaption class="about-portrait__caption">
+          <span>R. Varadharajan</span><span>Designated Partner</span>
+        </figcaption>
+      </figure>
+      <div class="about-copy" data-reveal>
+        <p class="eyebrow">Dwarak Foundations Chennai LLP</p>
+        <h2>A small construction company with a long view.</h2>
+        <p>
+          Dwarak Foundations began in 1998 under the leadership of Mr. R. Varadharajan. Since then, we have completed more than 50 projects across Chennai, including villas, duplex homes, and apartment buildings.
+        </p>
+        <p>
+          We believe our company grows only when our clients are fully satisfied. That means creating more value, maintaining a high standard of construction, and remaining available long after a project is handed over.
+        </p>
+        <p>
+          Rather than building our reputation through advertising alone, we have invested in the experience of every client from the first conversation. Their referrals and continued trust remain the clearest measure of our work.
+        </p>
+        <a class="button button--outline" href="/testimonials/">Hear from our clients <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">Built over time</p>
+        <h2>A broad body of residential work.</h2>
+      </div>
+      <div class="milestone-grid" data-reveal>
+        <div><strong>08</strong><p>Villas shaped for individual families and sites.</p></div>
+        <div><strong>18</strong><p>Duplex homes balancing privacy and connection.</p></div>
+        <div><strong>27</strong><p>Apartment projects delivered across Chennai.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <ContactBand />
+</BaseLayout>

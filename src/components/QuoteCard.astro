@@ -1,0 +1,19 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+
+interface Props {
+  testimonial: CollectionEntry<"testimonials">;
+  index?: number;
+}
+
+const { testimonial, index = 0 } = Astro.props;
+const { Content } = await render(testimonial);
+---
+
+<figure class="quote-card" data-reveal style={`--reveal-delay: ${Math.min(index * 60, 240)}ms`}>
+  <blockquote><Content /></blockquote>
+  <figcaption>
+    <span>{testimonial.data.name}</span>
+    <small>{testimonial.data.role}{testimonial.data.project ? ` · ${testimonial.data.project}` : ""}</small>
+  </figcaption>
+</figure>

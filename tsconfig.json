@@ -1,0 +1,29 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": []
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "astro.config.ts",
+    "src/**/*.astro",
+    "src/**/*.ts",
+    "admin-app/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "admin-dist",
+    "node_modules",
+    "assets/js",
+    "src/assets",
+    "src/docs",
+    "src/html",
+    "src/partials",
+    "vendor",
+    "gulpfile.js"
+  ]
+}

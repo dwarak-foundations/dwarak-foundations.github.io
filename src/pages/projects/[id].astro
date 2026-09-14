@@ -1,0 +1,138 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import { byOrder, projectPath, projectStatus } from "@/lib/content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const projects = (await getCollection("projects")).sort(byOrder);
+const currentIndex = projects.findIndex((item) => item.id === project.id);
+const nextProject = projects[(currentIndex + 1) % projects.length];
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "GeneralContractor",
+      "@id": "https://dwarakfoundations.com/#organization",
+      name: "Dwarak Foundations Chennai LLP",
+      url: "https://dwarakfoundations.com",
+    },
+    {
+      "@type": "Residence",
+      name: project.data.title,
+      description: project.data.seoDescription,
+      image: new URL(project.data.hero.src, Astro.site).toString(),
+      address: project.data.address,
+      url: new URL(projectPath(project), Astro.site).toString(),
+      creator: { "@id": "https://dwarakfoundations.com/#organization" },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={project.data.title}
+  description={project.data.seoDescription}
+  image={project.data.hero.src}
+  schema={schema}
+>
+  <header class="project-hero">
+    <div class="project-hero__image">
+      <img
+        src={project.data.hero.src}
+        alt={project.data.hero.alt}
+        width="1800"
+        height="1200"
+        fetchpriority="high"
+      />
+      <div class="project-hero__title shell">
+        <p class="eyebrow">{projectStatus(project.data.status)} / {project.data.location}</p>
+        <h1>{project.data.title}</h1>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="project-overview shell">
+      <dl class="project-facts" data-reveal>
+        {project.data.completion && <div><dt>Completed</dt><dd>{project.data.completion}</dd></div>}
+        {project.data.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+        {project.data.rera && <div><dt>TNRERA</dt><dd>{project.data.rera}</dd></div>}
+      </dl>
+      <div class="project-copy" data-reveal>
+        <p class="eyebrow">Project notes</p>
+        <h2>{project.data.summary}</h2>
+        <Content />
+        {project.data.brochure && (
+          <a
+            class="button button--outline"
+            href={project.data.brochure}
+            target="_blank"
+            rel="noreferrer"
+            data-analytics-event="brochure_downloaded"
+            data-analytics-target={project.id}
+          >
+            View project brochure <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--deep" aria-labelledby="gallery-title">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">Gallery</p>
+        <h2 id="gallery-title">A closer look.</h2>
+      </div>
+      <div class="gallery-grid">
+        {project.data.gallery.map((image, index) => (
+          <figure data-reveal style={`--reveal-delay: ${Math.min(index * 70, 210)}ms`}>
+            <img src={image.src} alt={image.alt} width="1400" height="1000" loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="map-heading" data-reveal>
+        <h2>In the neighbourhood.</h2>
+        <address>{project.data.address}</address>
+      </div>
+      <div class="map-frame" data-reveal>
+        <iframe
+          src={project.data.mapEmbed}
+          title={`Map showing ${project.data.title}`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--compact section--dark">
+    <div class="shell" data-reveal>
+      <p class="eyebrow">Continue exploring</p>
+      <a href={projectPath(nextProject)} data-analytics-event="project_opened" data-analytics-target={nextProject.id}>
+        <span style="display:block; font-family:var(--serif); font-size:clamp(3rem, 7vw, 7rem); letter-spacing:-.045em; line-height:1;">
+          {nextProject.data.title} <span aria-hidden="true">↗</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <ContactBand />
+</BaseLayout>
