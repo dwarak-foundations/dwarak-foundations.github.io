@@ -1,5 +1,6 @@
 ---
-import { render, type CollectionEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { tamilTestimonials } from "@/lib/testimonial-copy";
 
 interface Props {
   testimonial: CollectionEntry<"testimonials">;
@@ -7,11 +8,19 @@ interface Props {
 }
 
 const { testimonial, index = 0 } = Astro.props;
-const { Content } = await render(testimonial);
+const englishQuote = testimonial.body.trim();
+const tamilQuote = tamilTestimonials[testimonial.id] ?? englishQuote;
 ---
 
 <figure class="quote-card" data-reveal style={`--reveal-delay: ${Math.min(index * 60, 240)}ms`}>
-  <blockquote><Content /></blockquote>
+  <blockquote>
+    <p
+      data-testimonial-copy
+      data-copy-en={englishQuote}
+      data-copy-ta={tamilQuote}
+      data-i18n-ignore
+    >{englishQuote}</p>
+  </blockquote>
   <figcaption>
     <span>{testimonial.data.name}</span>
     <small>{testimonial.data.role}{testimonial.data.project ? ` · ${testimonial.data.project}` : ""}</small>

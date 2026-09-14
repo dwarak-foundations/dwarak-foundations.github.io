@@ -49,7 +49,7 @@ const tamil: Record<string, string> = {
   "A Chennai builder grounded in trust": "நம்பிக்கையில் வேரூன்றிய சென்னை கட்டுமான நிறுவனம்",
   "Built around people": "மக்களை மையமாகக் கொண்டது",
   "Established": "தொடங்கிய ஆண்டு",
-  "Completed works": "நிறைவு செய்த பணிகள்",
+  "Completed projects": "நிறைவு செய்த திட்டங்கள்",
   "Company highlights": "நிறுவனச் சிறப்புகள்",
   "Across": "செயல்படும் இடம்",
   "Chennai": "சென்னை",
@@ -75,7 +75,11 @@ const tamil: Record<string, string> = {
   "Since 1998, our work has grown through the confidence of clients who chose to build with us and then recommended us to others.": "1998 முதல், எங்களுடன் கட்டத் தேர்ந்தெடுத்து பிறருக்கும் பரிந்துரைத்த வாடிக்கையாளர்களின் நம்பிக்கையால் எங்கள் பணி வளர்ந்துள்ளது.",
   "Varadharajan Ramasamy, designated partner at Dwarak Foundations": "துவாரக் ஃபவுண்டேஷன்ஸ் பெயரிடப்பட்ட பங்குதாரர் வரதராஜன் ராமசாமி",
   "Varadharajan Ramasamy": "வரதராஜன் ராமசாமி",
+  "Mr. Varadharajan Ramasamy, designated partner at Dwarak Foundations": "துவாரக் ஃபவுண்டேஷன்ஸ் பெயரிடப்பட்ட பங்குதாரர் திரு. வரதராஜன் ராமசாமி",
+  "Mr. Varadharajan Ramasamy": "திரு. வரதராஜன் ராமசாமி",
   "Designated Partner": "பெயரிடப்பட்ட பங்குதாரர்",
+  "Company registration details": "நிறுவனப் பதிவு விவரங்கள்",
+  "Founded": "தொடங்கிய ஆண்டு",
   "A small construction company with a long view.": "நீண்ட பார்வை கொண்ட சிறிய கட்டுமான நிறுவனம்.",
   "Dwarak Foundations began in 1998 under the leadership of Mr. Varadharajan Ramasamy. Since then, we have completed more than 50 projects across Chennai, including villas, duplex homes, and apartment buildings.": "திரு. வரதராஜன் ராமசாமியின் தலைமையில் 1998-இல் துவாரக் ஃபவுண்டேஷன்ஸ் தொடங்கப்பட்டது. அதன்பின் சென்னை முழுவதும் வில்லாக்கள், டூப்ளெக்ஸ் வீடுகள், அடுக்குமாடிகள் உட்பட 50-க்கும் மேற்பட்ட திட்டங்களை நிறைவு செய்துள்ளோம்.",
   "We believe our company grows only when our clients are fully satisfied. That means creating more value, maintaining a high standard of construction, and remaining available long after a project is handed over.": "வாடிக்கையாளர்கள் முழுமையாக திருப்தியடைந்தால்தான் நிறுவனம் வளரும் என்று நம்புகிறோம். அதிக மதிப்பு, உயர்ந்த கட்டுமானத் தரம், ஒப்படைத்த பின்னரும் தொடரும் ஆதரவு என்பதே அதன் பொருள்.",
@@ -388,6 +392,9 @@ export function applyLocale(target: Locale) {
   document.querySelectorAll<HTMLMetaElement>('meta[name="description"], meta[property="og:title"], meta[property="og:description"], meta[name="twitter:title"], meta[name="twitter:description"]').forEach((meta) => {
     translateAttribute(meta, "content", target, previous);
   });
+  document.querySelectorAll<HTMLElement>("[data-testimonial-copy]").forEach((quote) => {
+    quote.textContent = target === "ta" ? quote.dataset.copyTa ?? quote.dataset.copyEn ?? "" : quote.dataset.copyEn ?? "";
+  });
 
   const toggle = document.querySelector<HTMLButtonElement>("[data-locale-toggle]");
   const toggleLabel = toggle?.querySelector<HTMLElement>("[data-locale-toggle-label]");
@@ -401,7 +408,7 @@ export function applyLocale(target: Locale) {
     toggleLabel.textContent = nextLocale === "ta" ? "தமிழ்" : "English";
     toggleLabel.lang = nextLocale;
   }
-  if (toggleMark) toggleMark.textContent = nextLocale === "ta" ? "த" : "A";
+  if (toggleMark) toggleMark.textContent = nextLocale === "ta" ? "ஆ" : "A";
   activeLocale = target;
   window.dispatchEvent(new CustomEvent("localechange", { detail: { locale: target } }));
 }

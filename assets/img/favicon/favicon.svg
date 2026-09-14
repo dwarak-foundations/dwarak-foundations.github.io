@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Dwarak Foundations</title>
+  <rect width="64" height="64" rx="14" fill="#d52027"/>
+  <path d="M10 29 32 10l22 19v25H10z" fill="#fbf8f3"/>
+  <path d="M27 38h10v16H27z" fill="#231f20"/>
+</svg>

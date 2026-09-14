@@ -49,3 +49,21 @@ async function prepareDirectory(directory) {
 }
 
 await prepareDirectory(imageSourcePath);
+
+const faviconSource = join(imageSourcePath, "favicon", "favicon.svg");
+const faviconSizes = [
+  ["favicon-16x16.png", 16],
+  ["favicon-32x32.png", 32],
+  ["apple-touch-icon.png", 180],
+  ["android-chrome-192x192.png", 192],
+  ["mstile-150x150.png", 150],
+  ["android-chrome-512x512.png", 512],
+  ["favicon.png", 512],
+];
+
+for (const [filename, size] of faviconSizes) {
+  await sharp(faviconSource)
+    .resize(size, size)
+    .png()
+    .toFile(join(imageOutputPath, "favicon", filename));
+}
