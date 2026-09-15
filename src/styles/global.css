@@ -24,8 +24,6 @@
   --line: rgba(35, 31, 32, 0.18);
   --accent: #d52027;
   --accent-dark: #a3181e;
-  --whatsapp: #25d366;
-  --whatsapp-hover: #1fbd5a;
   --status-completed: #77716b;
   --status-ongoing: var(--accent);
   --status-upcoming: var(--accent);
@@ -213,18 +211,16 @@ select {
   color: var(--white);
 }
 
-.button--whatsapp,
-.button--whatsapp.button--light {
-  border-color: var(--whatsapp);
-  background: var(--whatsapp);
-  color: var(--ink);
+.button--accent {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--white);
 }
 
-.button--whatsapp:hover,
-.button--whatsapp.button--light:hover {
-  border-color: var(--whatsapp-hover);
-  background: var(--whatsapp-hover);
-  color: var(--ink);
+.button--accent:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .button__label {
@@ -822,6 +818,11 @@ html[data-locale="ta"] .home-hero .display-title {
 .contact-band p {
   margin: 0;
   color: rgba(255, 253, 248, 0.72);
+}
+
+.contact-band__button:hover {
+  border-color: var(--ink);
+  background: var(--ink);
 }
 
 .project-hero {
