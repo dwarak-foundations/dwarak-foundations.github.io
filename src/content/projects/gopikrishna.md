@@ -1,6 +1,6 @@
 ---
 title: Dwarak Gopikrishna
-summary: Six flats in Indira Nagar, Adyar. Completed January 2019.
+summary: 6 two-bedroom apartments in Adyar. Completed in January 2019.
 location: Adyar
 street: 9th Cross Street
 address: Plot No. 1, 9th Cross Street, Indira Nagar, Adyar, Chennai 600020

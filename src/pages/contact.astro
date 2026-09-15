@@ -1,22 +1,24 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { whatsappDisplayNumber, whatsappHref } from "@/lib/contact";
 
 const mapEmbed = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d497732.60109624936!2d80.209528!3d12.93752!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525c35fe591a77%3A0xc76595f0e7d9138b!2sArumugam%20Nagar%20I%20St%2C%20Pallikaranai%2C%20Chennai%2C%20Tamil%20Nadu%20600100%2C%20India!5e0!3m2!1sen!2sus!4v1636088923209!5m2!1sen!2sus";
+const whatsappUrl = whatsappHref("Hello, I would like to know more about Dwarak Foundations.");
 ---
 
 <BaseLayout
-  title="Contact"
-  description="Contact Dwarak Foundations in Pallikaranai, Chennai to discuss a new home or residential construction project."
+  title="WhatsApp"
+  description="Message Dwarak Foundations on WhatsApp about a home or construction project in Chennai."
 >
   <header class="page-hero">
     <div class="page-hero__grid shell">
       <div>
-        <p class="eyebrow">Contact</p>
-        <h1 class="page-title">Every project starts with listening.</h1>
+        <p class="eyebrow">Dwarak Foundations</p>
+        <h1 class="page-title">WhatsApp us.</h1>
       </div>
       <div class="page-hero__aside">
         <p>
-          Tell us about your site, your family, and what you hope to create. We will help you understand the next step.
+          Tell us what you want to build.
         </p>
       </div>
     </div>
@@ -25,20 +27,12 @@ const mapEmbed = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d497732.60
   <section class="section">
     <div class="contact-grid shell">
       <div data-reveal>
-        <p class="eyebrow">Reach our team</p>
         <div class="contact-list">
           <div class="contact-item">
-            <span>Call</span>
+            <span>WhatsApp</span>
             <div>
-              <a href="tel:+919884409031" data-analytics-event="phone_clicked" data-analytics-target="contact_primary">+91 98844 09031</a>
-              <a href="tel:+919884000660" data-analytics-event="phone_clicked" data-analytics-target="contact_secondary">+91 98840 00660</a>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span>Email</span>
-            <div>
-              <a href="mailto:dwarakfoundations@gmail.com" data-analytics-event="email_clicked" data-analytics-target="contact">
-                dwarakfoundations@gmail.com
+              <a class="button button--whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer" data-analytics-event="whatsapp_clicked" data-analytics-target="contact_primary">
+                {whatsappDisplayNumber} <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>

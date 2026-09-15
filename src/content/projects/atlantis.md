@@ -1,6 +1,6 @@
 ---
 title: Dwarak Atlantis
-summary: Stilt plus five, ten flats on Paari Street, Pallikaranai. TNRERA registered.
+summary: 10 three-bedroom apartments in Pallikaranai. Ongoing.
 location: Pallikaranai
 street: Paari Street
 address: Plot Nos. 53 & 54, Paari Street, VGP Shanthi Nagar, Pallikaranai, Chennai 600100

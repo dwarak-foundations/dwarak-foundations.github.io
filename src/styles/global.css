@@ -24,6 +24,10 @@
   --line: rgba(35, 31, 32, 0.18);
   --accent: #d52027;
   --accent-dark: #a3181e;
+  --whatsapp: #1f7a4d;
+  --status-completed: #287a52;
+  --status-ongoing: #a9550d;
+  --status-upcoming: #2869a8;
   --white: #fbf8f3;
   --serif: "Newsreader Variable", Georgia, serif;
   --sans: "Manrope Variable", system-ui, sans-serif;
@@ -208,6 +212,19 @@ select {
   color: var(--white);
 }
 
+.button--whatsapp,
+.button--whatsapp.button--light {
+  border-color: var(--whatsapp);
+  background: var(--whatsapp);
+  color: var(--white);
+}
+
+.button--whatsapp:hover,
+.button--whatsapp.button--light:hover {
+  border-color: #155d3a;
+  background: #155d3a;
+}
+
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
@@ -282,6 +299,21 @@ select {
   transform: scaleX(1);
 }
 
+.desktop-nav .nav-whatsapp {
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-small);
+  background: var(--whatsapp);
+  color: var(--white);
+}
+
+.desktop-nav .nav-whatsapp::after {
+  display: none;
+}
+
+.desktop-nav .nav-whatsapp:hover {
+  background: #155d3a;
+}
+
 .language-toggle {
   display: inline-grid;
   grid-template-columns: 1.65rem auto;
@@ -350,11 +382,20 @@ html[data-locale="ta"] .home-hero .display-title {
   border-bottom: 1px solid var(--line);
 }
 
+.page-hero--projects {
+  min-height: 24rem;
+  padding-block: clamp(10rem, 14vw, 12rem) clamp(2.5rem, 5vw, 4rem);
+}
+
 .page-hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
   align-items: end;
   gap: clamp(3rem, 9vw, 9rem);
+}
+
+.page-hero__grid--single {
+  grid-template-columns: 1fr;
 }
 
 .page-hero__aside {
@@ -1229,6 +1270,36 @@ html[data-locale="ta"] .home-hero .display-title {
   color: var(--white);
 }
 
+.projects-explorer-toolbar [data-explorer-filter="completed"] {
+  background: rgba(40, 122, 82, 0.1);
+  color: #1d6240;
+}
+
+.projects-explorer-toolbar [data-explorer-filter="ongoing"] {
+  background: rgba(196, 106, 18, 0.11);
+  color: #91500f;
+}
+
+.projects-explorer-toolbar [data-explorer-filter="upcoming"] {
+  background: rgba(40, 105, 168, 0.1);
+  color: #1f578e;
+}
+
+.projects-explorer-toolbar [data-explorer-filter="completed"][aria-pressed="true"] {
+  background: var(--status-completed);
+  color: var(--white);
+}
+
+.projects-explorer-toolbar [data-explorer-filter="ongoing"][aria-pressed="true"] {
+  background: var(--status-ongoing);
+  color: var(--white);
+}
+
+.projects-explorer-toolbar [data-explorer-filter="upcoming"][aria-pressed="true"] {
+  background: var(--status-upcoming);
+  color: var(--white);
+}
+
 .projects-explorer-toolbar button:hover:not([aria-pressed="true"]) {
   background: var(--paper-deep);
 }
@@ -1319,9 +1390,12 @@ html[data-locale="ta"] .home-hero .display-title {
   display: block;
 }
 
-.projects-explorer-marker--completed path,
+.projects-explorer-marker--completed path {
+  fill: var(--status-completed);
+}
+
 .projects-explorer-marker--ongoing path {
-  fill: var(--accent);
+  fill: var(--status-ongoing);
 }
 
 .projects-explorer-marker--completed rect,
@@ -1332,9 +1406,9 @@ html[data-locale="ta"] .home-hero .display-title {
 .projects-explorer-marker--plot {
   width: 24px;
   height: 24px;
-  border: 2px dashed var(--accent-dark);
+  border: 2px dashed var(--status-upcoming);
   border-radius: 0.2rem;
-  background: rgba(213, 32, 39, 0.13);
+  background: rgba(40, 105, 168, 0.14);
 }
 
 .projects-explorer-icon:hover .projects-explorer-marker,
@@ -1626,6 +1700,20 @@ html[data-locale="ta"] .home-hero .display-title {
     font-size: 1.6rem;
   }
 
+  .mobile-nav nav .nav-whatsapp {
+    margin-top: 0.75rem;
+    padding-inline: 1rem;
+    border: 0;
+    border-radius: var(--radius-small);
+    background: var(--whatsapp);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   .home-hero__grid {
     grid-template-columns: 1fr 0.85fr;
   }
@@ -1700,6 +1788,10 @@ html[data-locale="ta"] .home-hero .display-title {
   .page-hero {
     min-height: auto;
     padding-block: 9.5rem 4.5rem;
+  }
+
+  .page-hero--projects {
+    padding-block: 8.5rem 3.5rem;
   }
 
   .page-hero__grid {

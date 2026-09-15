@@ -2,142 +2,25 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ContactBand from "@/components/ContactBand.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
-import QuoteCard from "@/components/QuoteCard.astro";
-import SectionHeading from "@/components/SectionHeading.astro";
+import ProjectsExplorer from "@/components/ProjectsExplorer.astro";
 import { byOrder } from "@/lib/content";
 
 const projects = (await getCollection("projects")).sort(byOrder);
-const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 2);
-const testimonials = (await getCollection("testimonials"))
-  .filter((testimonial) => testimonial.data.featured)
-  .sort(byOrder)
-  .slice(0, 3);
 ---
 
 <BaseLayout
   title="Dwarak Foundations"
-  description="Dwarak Foundations creates thoughtfully designed homes and enduring residential buildings across Chennai. Building with care since 1998."
+  description="See completed, ongoing, and upcoming Dwarak Foundations projects across Chennai."
 >
-  <section class="home-hero">
-    <div class="home-hero__grid shell">
-      <div class="home-hero__copy">
-        <p class="eyebrow">Chennai / Since 1998</p>
-        <h1 class="display-title">Homes with thought in every line.</h1>
-        <p class="lede">
-          We create individual homes and residential buildings shaped around the people who live in them, with considered design and uncompromising construction.
-        </p>
-        <div class="home-hero__actions">
-          <a class="button" href="/projects/" data-analytics-event="projects_opened" data-analytics-target="home_hero">
-            Explore our work <span aria-hidden="true">↗</span>
-          </a>
-          <a class="button button--outline" href="/contact/" data-analytics-event="contact_opened" data-analytics-target="home_hero">
-            Start a project
-          </a>
-        </div>
-      </div>
-      <div class="home-hero__visual">
-        <img
-          src="/img/carousel/image-1.jpg"
-          width="1600"
-          height="1200"
-          alt="Dwarak Atlantis residential building in Chennai"
-          fetchpriority="high"
-        />
-        <div class="home-hero__caption">
-          <span>Dwarak Atlantis</span>
-          <span>Pallikaranai</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="stats-strip" aria-label="Company highlights">
-    <div class="stats-grid shell">
+  <header class="page-hero page-hero--projects">
+    <div class="page-hero__grid page-hero__grid--single shell">
       <div>
-        <p>A Chennai builder grounded in trust</p>
-        <strong>Built around people</strong>
-      </div>
-      <div>
-        <p>Established</p>
-        <strong>1998</strong>
-      </div>
-      <div>
-        <p>Completed projects</p>
-        <strong>50+</strong>
-      </div>
-      <div>
-        <p>Across</p>
-        <strong>Chennai</strong>
+        <h1 class="page-title">Projects in Chennai.</h1>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section class="section">
-    <div class="shell">
-      <SectionHeading
-        eyebrow="Selected work"
-        title="A portfolio built one relationship at a time."
-        copy="From individual villas to closely scaled apartment communities, every project begins with its site, its purpose, and the people it will serve."
-      />
-      <div class="project-grid">
-        {featuredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
-      </div>
-      <div style="margin-top: clamp(3rem, 7vw, 6rem);" data-reveal>
-        <a class="button button--outline" href="/projects/" data-analytics-event="projects_opened" data-analytics-target="featured_projects">
-          View all projects <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--deep">
-    <div class="story-grid shell">
-      <div class="story-grid__image" data-reveal>
-        <img
-          src="/img/carousel/image-2.jpg"
-          width="1200"
-          height="1500"
-          alt="Architectural rendering of a Dwarak Foundations residence"
-          loading="lazy"
-        />
-      </div>
-      <div class="story-grid__copy" data-reveal>
-        <p class="eyebrow">Our approach</p>
-        <h2>Designed for a life, not a brochure.</h2>
-        <p>
-          Every family brings a different rhythm, set of needs, and idea of home. We listen first, then bring together experienced architects, engineers, and craftspeople to create spaces that feel personal and perform for the long term.
-        </p>
-        <div class="principles">
-          <div class="principle">
-            <span>01</span><strong>Personal</strong><p>Plans shaped around individual needs rather than a fixed formula.</p>
-          </div>
-          <div class="principle">
-            <span>02</span><strong>Enduring</strong><p>Sound materials and careful execution where quality is never an afterthought.</p>
-          </div>
-          <div class="principle">
-            <span>03</span><strong>Transparent</strong><p>Clear communication and support through every stage of the work.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="shell">
-      <SectionHeading
-        eyebrow="Client stories"
-        title="Trust, reflected in the people we build for."
-        copy="Much of our work has grown through referrals. These are the experiences behind those relationships."
-      />
-      <div class="quotes-grid">
-        {testimonials.map((testimonial, index) => <QuoteCard testimonial={testimonial} index={index} />)}
-      </div>
-      <div style="margin-top: 3rem;" data-reveal>
-        <a class="button button--outline" href="/testimonials/">Read every story <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
-  </section>
+  <ProjectsExplorer projects={projects} />
 
   <ContactBand />
 </BaseLayout>

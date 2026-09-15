@@ -1,6 +1,6 @@
 ---
 title: Dwarak Sumana
-summary: Four flats on Rajam Nagar, S. Kolathur. Completed June 2019.
+summary: 4 apartments in S. Kolathur. Completed in June 2019.
 location: S. Kolathur
 street: Rajam Nagar 1st Street
 address: Plot No. 9, Rajam Nagar 1st Street, S. Kolathur, Chennai 600129

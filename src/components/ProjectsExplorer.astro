@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import "leaflet/dist/leaflet.css";
 import { projectPath, projectStatus } from "@/lib/content";
+import { whatsappHref } from "@/lib/contact";
 
 interface Props {
   projects: CollectionEntry<"projects">[];
@@ -26,9 +27,6 @@ interface ExplorerPin {
   longitude: number;
 }
 
-const whatsappNumber = "919884409031";
-const whatsappHref = (message: string) =>
-  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 const { projects } = Astro.props;
 const tamilProjectCopy: Record<string, { title: string; street: string }> = {
   atlantis: { title: "துவாரக் அட்லாண்டிஸ்", street: "பாரி தெரு" },
@@ -56,7 +54,7 @@ const projectPins: ExplorerPin[] = projects.map((project) => ({
   url: projectPath(project),
   whatsapp: whatsappHref(`Hello, I am asking about ${project.data.title} on ${project.data.street}.`),
   whatsappTa: whatsappHref(
-    `வணக்கம், ${tamilProjectCopy[project.id]?.street ?? project.data.street} தெருவில் ${tamilProjectCopy[project.id]?.title ?? project.data.title} பற்றி கேட்கிறேன்.`,
+    `வணக்கம், ${tamilProjectCopy[project.id]?.street ?? project.data.street} பகுதியில் ${tamilProjectCopy[project.id]?.title ?? project.data.title} பற்றி கேட்கிறேன்.`,
   ),
   latitude: project.data.coordinates.latitude,
   longitude: project.data.coordinates.longitude,
@@ -67,11 +65,11 @@ const futurePins: ExplorerPin[] = [
     kind: "plot",
     status: "upcoming",
     statusLabel: "Upcoming",
-    title: "Looking in Pallikaranai",
-    previewTitle: "We are looking for land here. Is this yours?",
+    title: "Land wanted in Pallikaranai",
+    previewTitle: "Do you own land here?",
     location: "Pallikaranai",
     street: "Pallikaranai",
-    summary: "A small luxury apartment building, if the ground is right.",
+    summary: "Land wanted for a small apartment building.",
     whatsapp: whatsappHref("Hello, I have a plot in Pallikaranai."),
     whatsappTa: whatsappHref("வணக்கம், பள்ளிக்கரணையில் என்னிடம் மனை உள்ளது."),
     latitude: 12.9338,
@@ -82,11 +80,11 @@ const futurePins: ExplorerPin[] = [
     kind: "plot",
     status: "upcoming",
     statusLabel: "Upcoming",
-    title: "Looking in Perumbakkam",
-    previewTitle: "We are looking for land here. Is this yours?",
+    title: "Land wanted in Perumbakkam",
+    previewTitle: "Do you own land here?",
     location: "Perumbakkam",
     street: "Perumbakkam",
-    summary: "Two to four grounds. Joint venture, as on Rajam Nagar.",
+    summary: "Two to four grounds wanted for a joint venture.",
     whatsapp: whatsappHref("Hello, I have a plot in Perumbakkam."),
     whatsappTa: whatsappHref("வணக்கம், பெரும்பாக்கத்தில் என்னிடம் மனை உள்ளது."),
     latitude: 12.903,
@@ -168,14 +166,13 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
             <p class="projects-explorer-preview__location" data-explorer-preview-location></p>
             <p data-explorer-preview-summary></p>
             <div class="projects-explorer-preview__actions">
-              <a class="button button--outline" data-explorer-preview-whatsapp target="_blank" rel="noreferrer">
+              <a class="button button--whatsapp" data-explorer-preview-whatsapp target="_blank" rel="noreferrer" data-analytics-event="whatsapp_clicked">
                 WhatsApp <span aria-hidden="true">↗</span>
               </a>
               <a class="button" data-explorer-preview-project data-analytics-event="project_opened">
                 Open this building <span aria-hidden="true">↗</span>
               </a>
             </div>
-            <small class="projects-explorer-preview__reach">Your message reaches the Dwarak Foundations team directly.</small>
           </div>
         </div>
       </div>
@@ -330,7 +327,8 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
       if (previewSummary) previewSummary.textContent = pin.summary;
       if (whatsappLink) {
         whatsappLink.href = document.documentElement.dataset.locale === "ta" ? pin.whatsappTa : pin.whatsapp;
-        whatsappLink.firstChild!.textContent = pin.kind === "plot" ? "I have a plot " : "WhatsApp ";
+        whatsappLink.firstChild!.textContent = pin.kind === "plot" ? "WhatsApp about this plot " : "WhatsApp us ";
+        whatsappLink.dataset.analyticsTarget = `explorer_preview_${pin.id}`;
       }
       if (projectLink) {
         projectLink.hidden = !pin.url;

@@ -1,12 +1,18 @@
+---
+import { whatsappHref } from "@/lib/contact";
+
+const href = whatsappHref("Hello, I would like to discuss a project with Dwarak Foundations.");
+---
+
 <section class="contact-band">
   <div class="shell contact-band__inner" data-reveal>
     <div>
-      <p class="eyebrow">Begin with a conversation</p>
-      <h2>Have a place in mind?</h2>
+      <p class="eyebrow">Start here</p>
+      <h2>Planning a home?</h2>
     </div>
-    <p>Bring us your site, your needs, and your ambition. We will help shape the way forward.</p>
-    <a class="button button--light" href="/contact/" data-analytics-event="contact_opened" data-analytics-target="contact_band">
-      Contact our team <span aria-hidden="true">↗</span>
+    <p>Message us about your home or land.</p>
+    <a class="button button--light button--whatsapp" href={href} target="_blank" rel="noreferrer" data-analytics-event="whatsapp_clicked" data-analytics-target="contact_band">
+      WhatsApp us <span aria-hidden="true">↗</span>
     </a>
   </div>
 </section>

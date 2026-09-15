@@ -1,6 +1,6 @@
 ---
 title: Dwarak Chaman
-summary: Six flats in Vengaivasal. Completed May 2017.
+summary: 6 apartments in Vengaivasal. Completed in May 2017.
 location: Vengaivasal
 street: Vengaivasal
 address: Vengaivasal, Chennai 600100

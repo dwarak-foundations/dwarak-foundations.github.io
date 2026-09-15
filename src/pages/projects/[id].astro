@@ -1,5 +1,5 @@
 ---
-import { getCollection, render, type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ContactBand from "@/components/ContactBand.astro";
 import { byOrder, projectPath, projectStatus } from "@/lib/content";
@@ -14,7 +14,6 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { Content } = await render(project);
 const projects = (await getCollection("projects")).sort(byOrder);
 const currentIndex = projects.findIndex((item) => item.id === project.id);
 const nextProject = projects[(currentIndex + 1) % projects.length];
@@ -70,9 +69,8 @@ const schema = {
         {project.data.rera && <div><dt>TNRERA</dt><dd>{project.data.rera}</dd></div>}
       </dl>
       <div class="project-copy" data-reveal>
-        <p class="eyebrow">Project notes</p>
+        <p class="eyebrow">Details</p>
         <h2>{project.data.summary}</h2>
-        <Content />
         {project.data.brochure && (
           <a
             class="button button--outline"
@@ -82,7 +80,7 @@ const schema = {
             data-analytics-event="brochure_downloaded"
             data-analytics-target={project.id}
           >
-            View project brochure <span aria-hidden="true">↗</span>
+            View brochure <span aria-hidden="true">↗</span>
           </a>
         )}
       </div>
@@ -92,8 +90,7 @@ const schema = {
   <section class="section section--deep" aria-labelledby="gallery-title">
     <div class="shell">
       <div class="section-heading" data-reveal>
-        <p class="eyebrow">Gallery</p>
-        <h2 id="gallery-title">A closer look.</h2>
+        <h2 id="gallery-title">Photos.</h2>
       </div>
       <div class="gallery-grid">
         {project.data.gallery.map((image, index) => (
@@ -108,7 +105,7 @@ const schema = {
   <section class="section">
     <div class="shell">
       <div class="map-heading" data-reveal>
-        <h2>In the neighbourhood.</h2>
+        <h2>Location.</h2>
         <address>{project.data.address}</address>
       </div>
       <div class="map-frame" data-reveal>
@@ -125,7 +122,7 @@ const schema = {
 
   <section class="section section--compact section--dark">
     <div class="shell" data-reveal>
-      <p class="eyebrow">Continue exploring</p>
+      <p class="eyebrow">Next project</p>
       <a href={projectPath(nextProject)} data-analytics-event="project_opened" data-analytics-target={nextProject.id}>
         <span class="next-project-link">
           {nextProject.data.title} <span aria-hidden="true">↗</span>

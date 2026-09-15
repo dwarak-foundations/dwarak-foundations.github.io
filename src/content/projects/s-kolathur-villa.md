@@ -1,6 +1,6 @@
 ---
 title: S. Kolathur Villa
-summary: Ground and first floor villa, 2,300 sq.ft. Completed January 2017.
+summary: 2,300 sq. ft. villa in S. Kolathur. Completed in January 2017.
 location: S. Kolathur
 street: S. Kolathur
 address: S. Kolathur, Chennai 600091
