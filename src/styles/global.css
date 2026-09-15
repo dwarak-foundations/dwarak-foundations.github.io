@@ -32,7 +32,7 @@
   --serif: "Newsreader Variable", Georgia, serif;
   --sans: "Manrope Variable", system-ui, sans-serif;
   --shell: min(1360px, calc(100vw - 48px));
-  --section-space: clamp(5rem, 10vw, 9.5rem);
+  --section-space: clamp(3.5rem, 7vw, 6rem);
   --radius-small: 0.5rem;
   --radius: 0.9rem;
   --radius-large: 1.25rem;
@@ -377,21 +377,21 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .page-hero {
-  min-height: 38rem;
-  padding-block: clamp(11rem, 17vw, 15rem) clamp(5rem, 9vw, 8rem);
+  min-height: 29rem;
+  padding-block: clamp(9.5rem, 12vw, 11rem) clamp(3rem, 5vw, 4.5rem);
   border-bottom: 1px solid var(--line);
 }
 
 .page-hero--projects {
-  min-height: 24rem;
-  padding-block: clamp(10rem, 14vw, 12rem) clamp(2.5rem, 5vw, 4rem);
+  min-height: 20rem;
+  padding-block: clamp(8.5rem, 11vw, 10rem) clamp(2rem, 4vw, 3rem);
 }
 
 .page-hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
   align-items: end;
-  gap: clamp(3rem, 9vw, 9rem);
+  gap: clamp(2rem, 6vw, 6rem);
 }
 
 .page-hero__grid--single {
@@ -520,7 +520,7 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .section--compact {
-  padding-block: clamp(4rem, 7vw, 6rem);
+  padding-block: clamp(3rem, 5vw, 4.5rem);
 }
 
 .section--dark {
@@ -534,7 +534,7 @@ html[data-locale="ta"] .home-hero .display-title {
 
 .section-heading {
   max-width: 55rem;
-  margin-bottom: clamp(3rem, 7vw, 6rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 
 .section-heading--center {
@@ -785,7 +785,7 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .contact-band {
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(3rem, 5vw, 4.5rem);
   background: var(--accent-dark);
   color: var(--white);
 }
@@ -794,7 +794,7 @@ html[data-locale="ta"] .home-hero .display-title {
   display: grid;
   grid-template-columns: 1.1fr 0.8fr auto;
   align-items: end;
-  gap: clamp(2rem, 6vw, 6rem);
+  gap: clamp(2rem, 4vw, 4rem);
 }
 
 .contact-band .eyebrow {
@@ -818,8 +818,8 @@ html[data-locale="ta"] .home-hero .display-title {
 
 .project-hero__image {
   position: relative;
-  height: min(72vh, 52rem);
-  min-height: 32rem;
+  height: min(60vh, 44rem);
+  min-height: 27rem;
   overflow: hidden;
 }
 
@@ -842,7 +842,7 @@ html[data-locale="ta"] .home-hero .display-title {
   right: 0;
   bottom: 0;
   left: 0;
-  padding-bottom: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: clamp(2rem, 3vw, 3rem);
   color: var(--white);
 }
 
@@ -863,7 +863,7 @@ html[data-locale="ta"] .home-hero .display-title {
 .project-overview {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
-  gap: clamp(3rem, 10vw, 10rem);
+  gap: clamp(2.5rem, 6vw, 6rem);
 }
 
 .project-facts {
@@ -934,13 +934,13 @@ html[data-locale="ta"] .home-hero .display-title {
 .gallery-grid img {
   width: 100%;
   height: 100%;
-  min-height: 28rem;
+  min-height: 22rem;
   object-fit: cover;
 }
 
 .map-frame {
   position: relative;
-  min-height: 30rem;
+  min-height: 24rem;
   overflow: hidden;
   border-radius: var(--radius-large);
   background: var(--paper-deep);
@@ -958,7 +958,7 @@ html[data-locale="ta"] .home-hero .display-title {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .map-heading h2 {
@@ -979,7 +979,7 @@ html[data-locale="ta"] .home-hero .display-title {
 .about-lead {
   display: grid;
   grid-template-columns: minmax(15rem, 0.55fr) minmax(0, 1.45fr);
-  gap: clamp(3rem, 10vw, 10rem);
+  gap: clamp(3rem, 6vw, 6rem);
 }
 
 .about-portrait {
@@ -1016,7 +1016,7 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .about-copy h2 {
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
   font-family: var(--serif);
   font-size: clamp(2.5rem, 4.6vw, 4.3rem);
   font-weight: 450;
@@ -1032,7 +1032,7 @@ html[data-locale="ta"] .home-hero .display-title {
 .company-details {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
   border-top: 1px solid var(--line);
   border-left: 1px solid var(--line);
 }
@@ -1071,8 +1071,8 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .milestone-grid div {
-  min-height: 15rem;
-  padding: 2rem;
+  min-height: 10rem;
+  padding: 1.5rem;
   border-right: 1px solid rgba(255, 253, 248, 0.25);
   border-bottom: 1px solid rgba(255, 253, 248, 0.25);
 }
@@ -1093,7 +1093,7 @@ html[data-locale="ta"] .home-hero .display-title {
 .contact-grid {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
-  gap: clamp(3rem, 10vw, 10rem);
+  gap: clamp(3rem, 6vw, 6rem);
 }
 
 .contact-list {
@@ -1125,12 +1125,12 @@ html[data-locale="ta"] .home-hero .display-title {
   font-weight: 550;
 }
 
-.contact-item a:hover {
+.contact-item a:not(.button):hover {
   color: var(--accent);
 }
 
 .contact-aside {
-  min-height: 34rem;
+  min-height: 28rem;
 }
 
 .site-footer {
@@ -1180,8 +1180,8 @@ html[data-locale="ta"] .home-hero .display-title {
 
 .not-found {
   display: grid;
-  min-height: 80vh;
-  padding-top: 9rem;
+  min-height: 65vh;
+  padding-top: 7rem;
   place-items: center;
   text-align: center;
 }
@@ -1224,7 +1224,7 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .projects-explorer-section {
-  padding-top: clamp(2rem, 4vw, 4rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .projects-explorer {
@@ -1340,7 +1340,7 @@ html[data-locale="ta"] .home-hero .display-title {
 
 .projects-explorer-stage {
   position: relative;
-  min-height: 44rem;
+  min-height: 38rem;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-large);
@@ -1350,7 +1350,7 @@ html[data-locale="ta"] .home-hero .display-title {
 .projects-explorer-map {
   z-index: 0;
   width: 100%;
-  min-height: 44rem;
+  min-height: 38rem;
   background: var(--paper-deep);
   font-family: var(--sans);
 }
@@ -1439,7 +1439,7 @@ html[data-locale="ta"] .home-hero .display-title {
 
 .projects-explorer-list {
   display: grid;
-  min-height: 44rem;
+  min-height: 38rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-content: start;
   gap: 1rem;
@@ -1756,7 +1756,7 @@ html[data-locale="ta"] .home-hero .display-title {
 @media (max-width: 720px) {
   :root {
     --shell: calc(100% - 32px);
-    --section-space: 5rem;
+    --section-space: 3.5rem;
   }
 
   body {
@@ -1787,16 +1787,16 @@ html[data-locale="ta"] .home-hero .display-title {
 
   .page-hero {
     min-height: auto;
-    padding-block: 9.5rem 4.5rem;
+    padding-block: 7.5rem 3.5rem;
   }
 
   .page-hero--projects {
-    padding-block: 8.5rem 3.5rem;
+    padding-block: 7rem 2.5rem;
   }
 
   .page-hero__grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
   }
 
   .home-hero {
@@ -1881,8 +1881,8 @@ html[data-locale="ta"] .home-hero .display-title {
   }
 
   .project-hero__image {
-    height: 68vh;
-    min-height: 32rem;
+    height: 55vh;
+    min-height: 25rem;
   }
 
   .project-facts div {
@@ -1898,11 +1898,11 @@ html[data-locale="ta"] .home-hero .display-title {
   }
 
   .gallery-grid img {
-    min-height: 20rem;
+    min-height: 16rem;
   }
 
   .map-frame {
-    min-height: 24rem;
+    min-height: 20rem;
   }
 
   .projects-explorer-toolbar {
@@ -1927,7 +1927,7 @@ html[data-locale="ta"] .home-hero .display-title {
   .projects-explorer-stage,
   .projects-explorer-map,
   .projects-explorer-list {
-    min-height: 36rem;
+    min-height: 30rem;
   }
 
   .projects-explorer-list {

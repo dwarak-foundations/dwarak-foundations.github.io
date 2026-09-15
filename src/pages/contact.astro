@@ -7,18 +7,18 @@ const whatsappUrl = whatsappHref("Hello, I would like to know more about Dwarak 
 ---
 
 <BaseLayout
-  title="WhatsApp"
-  description="Message Dwarak Foundations on WhatsApp about a home or construction project in Chennai."
+  title="Contact"
+  description="Contact Dwarak Foundations in Pallikaranai, Chennai to discuss a new home or residential construction project."
 >
   <header class="page-hero">
     <div class="page-hero__grid shell">
       <div>
-        <p class="eyebrow">Dwarak Foundations</p>
-        <h1 class="page-title">WhatsApp us.</h1>
+        <p class="eyebrow">Contact</p>
+        <h1 class="page-title">Every project starts with listening.</h1>
       </div>
       <div class="page-hero__aside">
         <p>
-          Tell us what you want to build.
+          Tell us about your site, your family, and what you hope to create. We will help you understand the next step.
         </p>
       </div>
     </div>
@@ -27,12 +27,21 @@ const whatsappUrl = whatsappHref("Hello, I would like to know more about Dwarak 
   <section class="section">
     <div class="contact-grid shell">
       <div data-reveal>
+        <p class="eyebrow">Reach our team</p>
         <div class="contact-list">
           <div class="contact-item">
             <span>WhatsApp</span>
             <div>
               <a class="button button--whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer" data-analytics-event="whatsapp_clicked" data-analytics-target="contact_primary">
                 {whatsappDisplayNumber} <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span>Email</span>
+            <div>
+              <a href="mailto:dwarakfoundations@gmail.com" data-analytics-event="email_clicked" data-analytics-target="contact">
+                dwarakfoundations@gmail.com
               </a>
             </div>
           </div>
