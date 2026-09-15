@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import ContactBand from "@/components/ContactBand.astro";
 import ProjectsExplorer from "@/components/ProjectsExplorer.astro";
 import { byOrder } from "@/lib/content";
 
@@ -11,16 +10,7 @@ const projects = (await getCollection("projects")).sort(byOrder);
 <BaseLayout
   title="Dwarak Foundations"
   description="See completed, ongoing, and upcoming Dwarak Foundations projects across Chennai."
+  hideFooter
 >
-  <header class="page-hero page-hero--projects">
-    <div class="page-hero__grid page-hero__grid--single shell">
-      <div>
-        <h1 class="page-title">Projects in Chennai.</h1>
-      </div>
-    </div>
-  </header>
-
-  <ProjectsExplorer projects={projects} />
-
-  <ContactBand />
+  <ProjectsExplorer projects={projects} fullBleed />
 </BaseLayout>

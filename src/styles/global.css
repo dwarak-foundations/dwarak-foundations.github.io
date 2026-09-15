@@ -24,10 +24,9 @@
   --line: rgba(35, 31, 32, 0.18);
   --accent: #d52027;
   --accent-dark: #a3181e;
-  --whatsapp: #1f7a4d;
-  --status-completed: #287a52;
-  --status-ongoing: #a9550d;
-  --status-upcoming: #2869a8;
+  --status-completed: #77716b;
+  --status-ongoing: var(--accent);
+  --status-upcoming: var(--accent);
   --white: #fbf8f3;
   --serif: "Newsreader Variable", Georgia, serif;
   --sans: "Manrope Variable", system-ui, sans-serif;
@@ -153,12 +152,12 @@ select {
 
 .display-title {
   max-width: 11ch;
-  font-size: clamp(3.4rem, 7.5vw, 6.8rem);
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
 }
 
 .page-title {
   max-width: 12ch;
-  font-size: clamp(3rem, 6.5vw, 5.8rem);
+  font-size: clamp(2.25rem, 4.2vw, 4rem);
 }
 
 .lede {
@@ -214,15 +213,27 @@ select {
 
 .button--whatsapp,
 .button--whatsapp.button--light {
-  border-color: var(--whatsapp);
-  background: var(--whatsapp);
+  border-color: var(--ink);
+  background: var(--ink);
   color: var(--white);
 }
 
 .button--whatsapp:hover,
 .button--whatsapp.button--light:hover {
-  border-color: #155d3a;
-  background: #155d3a;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.whatsapp-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
 }
 
 .js [data-reveal] {
@@ -297,21 +308,6 @@ select {
 .desktop-nav a:hover::after,
 .desktop-nav a[aria-current="page"]::after {
   transform: scaleX(1);
-}
-
-.desktop-nav .nav-whatsapp {
-  padding: 0.65rem 1rem;
-  border-radius: var(--radius-small);
-  background: var(--whatsapp);
-  color: var(--white);
-}
-
-.desktop-nav .nav-whatsapp::after {
-  display: none;
-}
-
-.desktop-nav .nav-whatsapp:hover {
-  background: #155d3a;
 }
 
 .language-toggle {
@@ -850,7 +846,7 @@ html[data-locale="ta"] .home-hero .display-title {
   max-width: 12ch;
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(3.1rem, 6.5vw, 6rem);
+  font-size: clamp(2.4rem, 4.8vw, 4.5rem);
   font-weight: 450;
   letter-spacing: -0.05em;
   line-height: 0.9;
@@ -1210,7 +1206,7 @@ html[data-locale="ta"] .home-hero .display-title {
 .next-project-link {
   display: block;
   font-family: var(--serif);
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
   letter-spacing: -0.045em;
   line-height: 1;
 }
@@ -1225,6 +1221,31 @@ html[data-locale="ta"] .home-hero .display-title {
 
 .projects-explorer-section {
   padding-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.projects-explorer-section--home {
+  padding: 6.1rem 0 0;
+}
+
+.projects-explorer-shell--full {
+  width: 100%;
+}
+
+.projects-explorer-section--home .projects-explorer-toolbar {
+  width: var(--shell);
+  margin: 0.85rem auto;
+}
+
+.projects-explorer-section--home .projects-explorer-stage {
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+}
+
+.projects-explorer-section--home .projects-explorer-stage,
+.projects-explorer-section--home .projects-explorer-map,
+.projects-explorer-section--home .projects-explorer-list {
+  min-height: max(34rem, calc(100dvh - 10.55rem));
 }
 
 .projects-explorer {
@@ -1271,18 +1292,20 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .projects-explorer-toolbar [data-explorer-filter="completed"] {
-  background: rgba(40, 122, 82, 0.1);
-  color: #1d6240;
+  background: rgba(35, 31, 32, 0.08);
+  color: var(--ink-soft);
 }
 
 .projects-explorer-toolbar [data-explorer-filter="ongoing"] {
-  background: rgba(196, 106, 18, 0.11);
-  color: #91500f;
+  background: rgba(213, 32, 39, 0.08);
+  color: var(--accent-dark);
 }
 
 .projects-explorer-toolbar [data-explorer-filter="upcoming"] {
-  background: rgba(40, 105, 168, 0.1);
-  color: #1f578e;
+  background-color: rgba(213, 32, 39, 0.04);
+  background-image: radial-gradient(rgba(213, 32, 39, 0.3) 0.8px, transparent 0.8px);
+  background-size: 5px 5px;
+  color: var(--accent-dark);
 }
 
 .projects-explorer-toolbar [data-explorer-filter="completed"][aria-pressed="true"] {
@@ -1296,12 +1319,29 @@ html[data-locale="ta"] .home-hero .display-title {
 }
 
 .projects-explorer-toolbar [data-explorer-filter="upcoming"][aria-pressed="true"] {
-  background: var(--status-upcoming);
-  color: var(--white);
+  background-color: rgba(213, 32, 39, 0.12);
+  background-image: radial-gradient(rgba(213, 32, 39, 0.55) 0.9px, transparent 0.9px);
+  background-size: 5px 5px;
+  box-shadow: inset 0 0 0 1px var(--status-upcoming);
+  color: var(--accent-dark);
 }
 
 .projects-explorer-toolbar button:hover:not([aria-pressed="true"]) {
   background: var(--paper-deep);
+}
+
+.projects-explorer-toolbar [data-explorer-filter="completed"]:hover:not([aria-pressed="true"]) {
+  background: rgba(35, 31, 32, 0.13);
+}
+
+.projects-explorer-toolbar [data-explorer-filter="ongoing"]:hover:not([aria-pressed="true"]) {
+  background: rgba(213, 32, 39, 0.14);
+}
+
+.projects-explorer-toolbar [data-explorer-filter="upcoming"]:hover:not([aria-pressed="true"]) {
+  background-color: rgba(213, 32, 39, 0.09);
+  background-image: radial-gradient(rgba(213, 32, 39, 0.4) 0.8px, transparent 0.8px);
+  background-size: 5px 5px;
 }
 
 .projects-explorer-toolbar .projects-explorer-locate {
@@ -1398,6 +1438,12 @@ html[data-locale="ta"] .home-hero .display-title {
   fill: var(--status-ongoing);
 }
 
+.projects-explorer-marker--upcoming path {
+  fill: rgba(213, 32, 39, 0.14);
+  stroke: var(--status-upcoming);
+  stroke-dasharray: 2.5 2;
+}
+
 .projects-explorer-marker--completed rect,
 .projects-explorer-marker--ongoing rect {
   fill: var(--white);
@@ -1408,7 +1454,9 @@ html[data-locale="ta"] .home-hero .display-title {
   height: 24px;
   border: 2px dashed var(--status-upcoming);
   border-radius: 0.2rem;
-  background: rgba(40, 105, 168, 0.14);
+  background-color: rgba(213, 32, 39, 0.08);
+  background-image: radial-gradient(rgba(213, 32, 39, 0.38) 0.8px, transparent 0.8px);
+  background-size: 5px 5px;
 }
 
 .projects-explorer-icon:hover .projects-explorer-marker,
@@ -1700,20 +1748,6 @@ html[data-locale="ta"] .home-hero .display-title {
     font-size: 1.6rem;
   }
 
-  .mobile-nav nav .nav-whatsapp {
-    margin-top: 0.75rem;
-    padding-inline: 1rem;
-    border: 0;
-    border-radius: var(--radius-small);
-    background: var(--whatsapp);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
   .home-hero__grid {
     grid-template-columns: 1fr 0.85fr;
   }
@@ -1782,7 +1816,7 @@ html[data-locale="ta"] .home-hero .display-title {
   }
 
   .display-title {
-    font-size: clamp(3rem, 14vw, 4.6rem);
+    font-size: clamp(2.5rem, 11vw, 3.8rem);
   }
 
   .page-hero {
@@ -1928,6 +1962,20 @@ html[data-locale="ta"] .home-hero .display-title {
   .projects-explorer-map,
   .projects-explorer-list {
     min-height: 30rem;
+  }
+
+  .projects-explorer-section--home {
+    padding-top: 5.1rem;
+  }
+
+  .projects-explorer-section--home .projects-explorer-toolbar {
+    margin-block: 0.75rem;
+  }
+
+  .projects-explorer-section--home .projects-explorer-stage,
+  .projects-explorer-section--home .projects-explorer-map,
+  .projects-explorer-section--home .projects-explorer-list {
+    min-height: max(28rem, calc(100dvh - 14rem));
   }
 
   .projects-explorer-list {

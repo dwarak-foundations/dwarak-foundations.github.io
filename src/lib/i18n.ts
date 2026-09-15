@@ -46,6 +46,7 @@ const tamil: Record<string, string> = {
   "Have a place in mind?": "ஒரு இடம் மனதில் உள்ளதா?",
   "Bring us your site, your needs, and your ambition. We will help shape the way forward.": "உங்கள் இடம், தேவைகள், கனவு ஆகியவற்றை எங்களிடம் பகிருங்கள். அடுத்த வழியை உருவாக்க உதவுகிறோம்.",
   "Contact our team": "எங்கள் குழுவைத் தொடர்புகொள்ளுங்கள்",
+  "Contact us": "எங்களைத் தொடர்புகொள்ளுங்கள்",
 
   "Chennai / Since 1998": "சென்னை / 1998 முதல்",
   "Homes with thought in every line.": "ஒவ்வொரு கோட்டிலும் சிந்தனை கொண்ட இல்லங்கள்.",
@@ -146,6 +147,7 @@ const tamil: Record<string, string> = {
   "Our portfolio": "எங்கள் திட்டங்கள்",
   "Our projects in Chennai.": "சென்னையில் எங்கள் திட்டங்கள்.",
   "Projects in Chennai.": "சென்னையில் திட்டங்கள்.",
+  "Our work in Chennai.": "சென்னையில் எங்கள் பணிகள்.",
   "Completed, ongoing, and upcoming projects.": "நிறைவு செய்த, நடப்பு மற்றும் வரவிருக்கும் திட்டங்கள்.",
   "Places made to be lived in.": "வாழ்வதற்காக உருவாக்கப்பட்ட இடங்கள்.",
   "Explore completed homes, current work, and future opportunities across Chennai by map or list.": "சென்னை முழுவதும் நிறைவு செய்த இல்லங்கள், நடப்பு பணிகள், எதிர்கால வாய்ப்புகளை வரைபடம் அல்லது பட்டியலில் பாருங்கள்.",

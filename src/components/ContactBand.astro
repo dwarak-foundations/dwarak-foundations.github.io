@@ -1,5 +1,6 @@
 ---
 import { whatsappHref } from "@/lib/contact";
+import WhatsAppIcon from "@/components/WhatsAppIcon.astro";
 
 const href = whatsappHref("Hello, I would like to discuss a project with Dwarak Foundations.");
 ---
@@ -12,7 +13,7 @@ const href = whatsappHref("Hello, I would like to discuss a project with Dwarak 
     </div>
     <p>Message us about your home or land.</p>
     <a class="button button--light button--whatsapp" href={href} target="_blank" rel="noreferrer" data-analytics-event="whatsapp_clicked" data-analytics-target="contact_band">
-      WhatsApp us <span aria-hidden="true">↗</span>
+      <span class="button__label"><WhatsAppIcon />Contact us</span><span aria-hidden="true">↗</span>
     </a>
   </div>
 </section>

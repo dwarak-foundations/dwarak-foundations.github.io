@@ -3,9 +3,11 @@ import type { CollectionEntry } from "astro:content";
 import "leaflet/dist/leaflet.css";
 import { projectPath, projectStatus } from "@/lib/content";
 import { whatsappHref } from "@/lib/contact";
+import WhatsAppIcon from "@/components/WhatsAppIcon.astro";
 
 interface Props {
   projects: CollectionEntry<"projects">[];
+  fullBleed?: boolean;
 }
 
 interface ExplorerPin {
@@ -27,7 +29,7 @@ interface ExplorerPin {
   longitude: number;
 }
 
-const { projects } = Astro.props;
+const { projects, fullBleed = false } = Astro.props;
 const tamilProjectCopy: Record<string, { title: string; street: string }> = {
   atlantis: { title: "துவாரக் அட்லாண்டிஸ்", street: "பாரி தெரு" },
   gopikrishna: { title: "துவாரக் கோபிகிருஷ்ணா", street: "9-வது குறுக்குத் தெரு" },
@@ -95,8 +97,8 @@ const pins = [...projectPins, ...futurePins];
 const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
 ---
 
-<section class="section projects-explorer-section" aria-label="Project map and list">
-  <div class="shell">
+<section class:list={["section", "projects-explorer-section", { "projects-explorer-section--home": fullBleed }]} aria-label="Project map and list">
+  <div class:list={{ shell: !fullBleed, "projects-explorer-shell--full": fullBleed }}>
     <div class="projects-explorer" data-projects-explorer data-reveal>
       <div class="projects-explorer-toolbar">
         <div class="projects-explorer-toolbar__group" role="group" aria-label="Filter projects by status">
@@ -167,7 +169,8 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
             <p data-explorer-preview-summary></p>
             <div class="projects-explorer-preview__actions">
               <a class="button button--whatsapp" data-explorer-preview-whatsapp target="_blank" rel="noreferrer" data-analytics-event="whatsapp_clicked">
-                WhatsApp <span aria-hidden="true">↗</span>
+                <span class="button__label"><WhatsAppIcon /><span data-explorer-whatsapp-label>Contact us</span></span>
+                <span aria-hidden="true">↗</span>
               </a>
               <a class="button" data-explorer-preview-project data-analytics-event="project_opened">
                 Open this building <span aria-hidden="true">↗</span>
@@ -238,6 +241,7 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
     const previewLocation = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-location]");
     const previewSummary = explorerRoot.querySelector<HTMLElement>("[data-explorer-preview-summary]");
     const whatsappLink = explorerRoot.querySelector<HTMLAnchorElement>("[data-explorer-preview-whatsapp]");
+    const whatsappLabel = explorerRoot.querySelector<HTMLElement>("[data-explorer-whatsapp-label]");
     const projectLink = explorerRoot.querySelector<HTMLAnchorElement>("[data-explorer-preview-project]");
 
     if (!mapElement || !listElement || !preview) throw new Error("Project explorer markup is incomplete");
@@ -327,7 +331,7 @@ const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
       if (previewSummary) previewSummary.textContent = pin.summary;
       if (whatsappLink) {
         whatsappLink.href = document.documentElement.dataset.locale === "ta" ? pin.whatsappTa : pin.whatsapp;
-        whatsappLink.firstChild!.textContent = pin.kind === "plot" ? "WhatsApp about this plot " : "WhatsApp us ";
+        if (whatsappLabel) whatsappLabel.textContent = "Contact us";
         whatsappLink.dataset.analyticsTarget = `explorer_preview_${pin.id}`;
       }
       if (projectLink) {

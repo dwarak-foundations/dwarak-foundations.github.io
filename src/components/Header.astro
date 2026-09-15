@@ -1,6 +1,4 @@
 ---
-import { whatsappHref } from "@/lib/contact";
-
 interface Props {
   pathname: string;
 }
@@ -12,7 +10,6 @@ const links = [
   { href: "/testimonials/", label: "Stories" },
   { href: "/contact/", label: "Contact" },
 ];
-const whatsappUrl = whatsappHref("Hello, I would like to know more about Dwarak Foundations.");
 const isActive = (href: string) =>
   href === "/" ? pathname === href || pathname.startsWith("/projects/") : pathname.startsWith(href);
 ---
@@ -29,14 +26,6 @@ const isActive = (href: string) =>
           {link.label}
         </a>
       ))}
-      <a
-        class="nav-whatsapp"
-        href={whatsappUrl}
-        target="_blank"
-        rel="noreferrer"
-        data-analytics-event="whatsapp_clicked"
-        data-analytics-target="header"
-      >WhatsApp</a>
     </nav>
 
     <button
@@ -61,14 +50,6 @@ const isActive = (href: string) =>
             {link.label}
           </a>
         ))}
-        <a
-          class="nav-whatsapp"
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-          data-analytics-event="whatsapp_clicked"
-          data-analytics-target="mobile_header"
-        >WhatsApp</a>
       </nav>
     </details>
   </div>

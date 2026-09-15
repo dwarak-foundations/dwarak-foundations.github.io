@@ -9,6 +9,7 @@ interface Props {
   image?: string;
   noindex?: boolean;
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  hideFooter?: boolean;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   image = "/img/projects/atlantis.jpeg",
   noindex = false,
   schema,
+  hideFooter = false,
 } = Astro.props;
 const pageTitle = title === "Dwarak Foundations" ? title : `${title} | Dwarak Foundations`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -85,7 +87,7 @@ const serializedSchema = JSON.stringify(schema ?? organizationSchema).replaceAll
     <main id="main-content">
       <slot />
     </main>
-    <Footer />
+    {!hideFooter && <Footer />}
     <script>
       import { initializeLocale } from "@/lib/i18n";
       initializeLocale();
