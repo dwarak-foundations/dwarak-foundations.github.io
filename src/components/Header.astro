@@ -1,4 +1,7 @@
 ---
+import WhatsAppIcon from "@/components/WhatsAppIcon.astro";
+import { whatsappHref } from "@/lib/contact";
+
 interface Props {
   pathname: string;
 }
@@ -10,6 +13,7 @@ const links = [
   { href: "/testimonials/", label: "Stories" },
   { href: "/contact/", label: "Contact" },
 ];
+const whatsappUrl = whatsappHref("Hello, I would like to know more about Dwarak Foundations.");
 const isActive = (href: string) =>
   href === "/" ? pathname === href || pathname.startsWith("/projects/") : pathname.startsWith(href);
 ---
@@ -28,17 +32,30 @@ const isActive = (href: string) =>
       ))}
     </nav>
 
-    <button
-      class="language-toggle"
-      type="button"
-      data-locale-toggle
-      data-locale-target="ta"
-      data-i18n-ignore
-      aria-label="Switch to Tamil"
-    >
-      <span class="language-toggle__mark" data-locale-toggle-mark aria-hidden="true">ஆ</span>
-      <span data-locale-toggle-label lang="ta">தமிழ்</span>
-    </button>
+    <div class="header-actions">
+      <a
+        class="button button--whatsapp nav-whatsapp"
+        href={whatsappUrl}
+        target="_blank"
+        rel="noreferrer"
+        data-analytics-event="whatsapp_clicked"
+        data-analytics-target="header"
+      >
+        <span class="button__label"><WhatsAppIcon />WhatsApp</span>
+      </a>
+
+      <button
+        class="language-toggle"
+        type="button"
+        data-locale-toggle
+        data-locale-target="ta"
+        data-i18n-ignore
+        aria-label="Switch to Tamil"
+      >
+        <span class="language-toggle__mark" data-locale-toggle-mark aria-hidden="true">ஆ</span>
+        <span data-locale-toggle-label lang="ta">தமிழ்</span>
+      </button>
+    </div>
 
     <details class="mobile-nav">
       <summary aria-label="Open navigation">

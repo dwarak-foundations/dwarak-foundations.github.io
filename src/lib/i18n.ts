@@ -148,6 +148,7 @@ const tamil: Record<string, string> = {
   "Our projects in Chennai.": "சென்னையில் எங்கள் திட்டங்கள்.",
   "Projects in Chennai.": "சென்னையில் திட்டங்கள்.",
   "Our work in Chennai.": "சென்னையில் எங்கள் பணிகள்.",
+  "Our work across Chennai.": "சென்னை முழுவதும் எங்கள் பணிகள்.",
   "Completed, ongoing, and upcoming projects.": "நிறைவு செய்த, நடப்பு மற்றும் வரவிருக்கும் திட்டங்கள்.",
   "Places made to be lived in.": "வாழ்வதற்காக உருவாக்கப்பட்ட இடங்கள்.",
   "Explore completed homes, current work, and future opportunities across Chennai by map or list.": "சென்னை முழுவதும் நிறைவு செய்த இல்லங்கள், நடப்பு பணிகள், எதிர்கால வாய்ப்புகளை வரைபடம் அல்லது பட்டியலில் பாருங்கள்.",

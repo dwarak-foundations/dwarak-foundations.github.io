@@ -97,7 +97,7 @@ const pins = [...projectPins, ...futurePins];
 const serializedPins = JSON.stringify(pins).replaceAll("<", "\\u003c");
 ---
 
-<section class:list={["section", "projects-explorer-section", { "projects-explorer-section--home": fullBleed }]} aria-label="Project map and list">
+<section class:list={["section", "projects-explorer-section", { "projects-explorer-section--full": fullBleed }]} aria-label="Project map and list">
   <div class:list={{ shell: !fullBleed, "projects-explorer-shell--full": fullBleed }}>
     <div class="projects-explorer" data-projects-explorer data-reveal>
       <div class="projects-explorer-toolbar">
